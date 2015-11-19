@@ -284,8 +284,6 @@ else {
          [YKSUserModel shareInstance].lat = currentLocation.coordinate.latitude;
          [YKSUserModel shareInstance].lng = currentLocation.coordinate.longitude;
      }
-     
-    
                                              //把当前位置(经纬度)传给服务器
      if ([YKSUserModel isLogin]) {
          [GZBaseRequest locationUploadLat:currentLocation.coordinate.latitude
