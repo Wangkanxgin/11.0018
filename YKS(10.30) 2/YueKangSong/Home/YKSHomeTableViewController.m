@@ -52,59 +52,15 @@
 @end
 
 @implementation YKSHomeTableViewController
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    //推出展示广告页面
-    [self presentViewController:[[YKSAdvertisementController alloc] init] animated:NO completion:nil];
-    self.navigationController.navigationBarHidden = NO;
-    NSArray *familyNames = [UIFont familyNames];
-    for( NSString *familyName in familyNames ){
-        printf( "Family: %s \n", [familyName UTF8String] );
-        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
-        for( NSString *fontName in fontNames ){
-            printf( "\tFont: %s \n", [fontName UTF8String] );
-        }
-    }
-
-    self.navigationItem.title = @"";
-    _addressButton.frame = CGRectMake(0, 0, SCREEN_WIDTH - 10, 25);
-    self.tableView.tableHeaderView = [self tableviewHeaderView];
-    
-    [self setAddressBtnFrame];
-    
-    [self requestDrugCategoryList];
-    
-    [self requestData];
-    
-}
-
-//请求药品类别列表数据
-
--(void)requestDrugCategoryList{
-
-    [GZBaseRequest drugCategoryListCallback:^(id responseObject, NSError *error) {
-        if (error) {
-            [self showToastMessage:@"网络加载失败"];
-            return ;
-        }
-        if (ServerSuccess(responseObject)) {
-            
-            _drugDatas = responseObject[@"data"][@"categorylist"];
-            
-        } else {
-            [self showToastMessage:responseObject[@"msg"]];
-        }
-        
-    }];
-}
 
 
 //页面即将加载
 - (void)viewWillAppear:(BOOL)animated {
     
+    [self diZhiLuoJiPanDuan];
+    
     self.navigationController.navigationBar.hidden=NO;
     self.tabBarController.tabBar.hidden = NO;
-    [self startSingleLocationRequest];
     
     [super viewWillAppear:animated];
     if (!_datas) {
@@ -160,10 +116,88 @@
     NSLog(@"will");
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //推出展示广告页面
+    [self presentViewController:[[YKSAdvertisementController alloc] init] animated:NO completion:nil];
+    self.navigationController.navigationBarHidden = NO;
+    NSArray *familyNames = [UIFont familyNames];
+    for( NSString *familyName in familyNames ){
+        printf( "Family: %s \n", [familyName UTF8String] );
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        for( NSString *fontName in fontNames ){
+            printf( "\tFont: %s \n", [fontName UTF8String] );
+        }
+    }
+
+    _addressBtn.frame = CGRectMake(0, 0, SCREEN_WIDTH - 10, 25);
+    self.navigationItem.title = @"";
+    self.tableView.tableHeaderView = [self tableviewHeaderView];
     
-    [super viewDidAppear:animated];
+    
+    [self requestDrugCategoryList];
+    
+    [self requestData];
+    
 }
+
+//地址逻辑判断
+
+-(void)diZhiLuoJiPanDuan{
+
+if ([YKSUserModel isLogin]) {
+    
+    NSDictionary *dic=[YKSUserModel shareInstance].currentSelectAddress;
+    
+    if ( ! ([dic isEqualToDictionary:@{}] || (dic == nil) || ( dic == NULL) )){
+        
+        [self setBtnTitleWithCurrentAddress];
+    }
+    else {
+        
+        [self startSingleLocationRequest];
+        
+    }
+    
+}
+else {
+    
+    [self startSingleLocationRequest];
+    
+    
+}
+
+
+[self setAddressBtnFrame];
+
+}
+
+
+//请求药品类别列表数据
+-(void)requestDrugCategoryList{
+
+    [GZBaseRequest drugCategoryListCallback:^(id responseObject, NSError *error) {
+        if (error) {
+            [self showToastMessage:@"网络加载失败"];
+            return ;
+        }
+        if (ServerSuccess(responseObject)) {
+            
+            NSLog(@"%@",responseObject);
+            
+            _drugDatas = responseObject[@"data"][@"categorylist"];
+            
+        } else {
+            [self showToastMessage:responseObject[@"msg"]];
+        }
+        
+    }];
+}
+
+
+
+
+
 
 //设置地址按钮frame
 -(void)setAddressBtnFrame{
@@ -172,7 +206,6 @@
     
     CGSize constraintSize = CGSizeMake(320, MAXFLOAT);
     
-    // Creates a new font instance with the current font size
     UIFont *font = self.addressBtn.titleLabel.font;
     
     CGRect textRect = [address boundingRectWithSize:constraintSize options:0 attributes:@{NSFontAttributeName:font} context:nil];
@@ -192,36 +225,6 @@
         [self.addressBtn setTitle:[NSString stringWithFormat:@"配送至:%@",str] forState:UIControlStateNormal];
     }
 
-    if ([YKSUserModel isLogin]) {
-        
-        NSDictionary *info = [YKSUserModel shareInstance].currentSelectAddress;
-        if (!IS_EMPTY_STRING(info[@"community"]) ) {
-            
-             NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
-            
-            if (info[@"sendable"] && ![info[@"sendable"] boolValue])
-            {
-                NSString *title = [NSString stringWithFormat:@"配送至:%@(暂不支持配送)", tempString];
-                [self.addressButton setTitle:title
-                                    forState:UIControlStateNormal];
-            }
-            else
-            {
-                [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
-                                    forState:UIControlStateNormal];
-            }
-        }
-        
-        else{
-            if (str) {
-                
-                [self.addressBtn setTitle:[NSString stringWithFormat:@"配送至:%@",str] forState:UIControlStateNormal];
-            }
-            else{
-               
-            }
-        }
-    }
     [self setAddressBtnFrame];
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -274,66 +277,72 @@
                                        timeout:10.0f
                                          block:^(CLLocation *currentLocation, INTULocationAccuracy achievedAccuracy, INTULocationStatus status) {
                                              
-                                             NSString *latLongString = [[NSString alloc] initWithFormat:@"%f,%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude];
-                                             
-                                             if ([YKSUserModel shareInstance].lat == 0) {
-                                                 [YKSUserModel shareInstance].lat = currentLocation.coordinate.latitude;
-                                                 [YKSUserModel shareInstance].lng = currentLocation.coordinate.longitude;
-                                             }
-                                             
-                                             if ([YKSUserModel isLogin]) {
-                                                 [GZBaseRequest locationUploadLat:currentLocation.coordinate.latitude
-                                                                              lng:currentLocation.coordinate.longitude
-                                                                         callback:^(id responseObject, NSError *error) {
-                                                                             
-                                                                         }];
-                                             }
+     NSString *latLongString = [[NSString alloc] initWithFormat:@"%f,%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude];
+     
+                         //设置用户数据模型的经纬度赋值
+     if ([YKSUserModel shareInstance].lat == 0) {
+         [YKSUserModel shareInstance].lat = currentLocation.coordinate.latitude;
+         [YKSUserModel shareInstance].lng = currentLocation.coordinate.longitude;
+     }
+     
+    
+                                             //把当前位置(经纬度)传给服务器
+     if ([YKSUserModel isLogin]) {
+         [GZBaseRequest locationUploadLat:currentLocation.coordinate.latitude
+                                      lng:currentLocation.coordinate.longitude
+                                 callback:^(id responseObject, NSError *error) {
+                                     
+                                 }];
+     }
 
-                                             [[GZHTTPClient shareClient] GET:BaiduMapGeocoderApi
-                                                                  parameters:@{@"location": latLongString,
-                                                                               @"coordtype": @"wgs84ll",
-                                                                               @"ak": BaiduMapAK,
-                                                                               @"output": @"json"}
-                                              
-                                                                     success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                                         
-                                                                         if (responseObject && [responseObject[@"status"] integerValue] == 0) {
-                                                                             NSDictionary *dic = responseObject[@"result"];
-                                                                             _myAddressInfo = dic;
-                                                                            
-                                                                             [UIViewController selectedCityArchiver:dic[@"addressComponent"]];
-                                                                             [UIViewController setMyLocation:dic];
-                                                                             
-                                                                             [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",dic[@"formatted_address"] ]forState:UIControlStateNormal];
-                                                               
-                                                                             
-                                                                             if ([YKSUserModel shareInstance].currentSelectAddress) {
-                                                                                 NSDictionary *info = [YKSUserModel shareInstance].currentSelectAddress;
-                                                                                 
-                                                                                 
-                                                                                 NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
-                                                                                 
-                                                                                 if (info[@"sendable"] && ![info[@"sendable"] boolValue])
-                                                                                 {
-                                                                                     NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
-                                                                                     [self.addressButton setTitle:title
-                                                                                                         forState:UIControlStateNormal];
-                                                                                 }
-                                                                                 else
-                                                                                 {
-                                                                                     [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
-                                                                                                         forState:UIControlStateNormal];
-                                                                                 }
-                                                                             }
-                                                                         }
-                                                                         NSLog(@"responseObject %@", responseObject);
-                                                                    
-                                                                      [self setAddressBtnTitle];
-                                                                     }
-                                                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                                         NSLog(@"error = %@", error);
-                                                                     }];
-                                         }];
+     [[GZHTTPClient shareClient] GET:BaiduMapGeocoderApi
+                          parameters:@{@"location": latLongString,
+                                       @"coordtype": @"wgs84ll",
+                                       @"ak": BaiduMapAK,
+                                       @"output": @"json"}
+      
+                             success:^(NSURLSessionDataTask *task, id responseObject) {
+                                 
+             if (responseObject && [responseObject[@"status"] integerValue] == 0) {
+                 NSDictionary *dic = responseObject[@"result"];
+                 _myAddressInfo = dic;
+                
+                 [UIViewController selectedCityArchiver:dic[@"addressComponent"]];
+                 
+                 [UIViewController setMyLocation:dic];
+                 
+             }
+          [self setAddressBtnTitle];
+                                 
+        [self setAddressBtnFrame];
+         }
+         failure:^(NSURLSessionDataTask *task, NSError *error) {
+             NSLog(@"error = %@", error);
+         }];
+    }];
+}
+
+//判断是否有当前选中地址
+
+-(void)setBtnTitleWithCurrentAddress{
+    
+    NSDictionary *info = [YKSUserModel shareInstance].currentSelectAddress;
+    
+    
+    NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
+    
+    if (info[@"sendable"] && ![info[@"sendable"] boolValue])
+    {
+        NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
+        [self.addressButton setTitle:title
+                            forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
+                            forState:UIControlStateNormal];
+    }
+
 }
 
 // 注意这里的：“province”,目前加入了 city_name  这里不能只是11。
@@ -390,40 +399,40 @@
              NSDictionary *info = self.info;
              BOOL isCreate = self.isCreat;
              
-                                                                   if (info) {
-                                                                       if (info[@"community_lat_lng"]) {
-                                                                           NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
-                                                                           [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
-                                                                           [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
-                                                                       }
-                                                                       if (![YKSUserModel shareInstance].currentSelectAddress) {
-                                                                           [YKSUserModel shareInstance].currentSelectAddress = info;
+       if (info) {
+           if (info[@"community_lat_lng"]) {
+               NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
+               [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
+               [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
+           }
+           if (![YKSUserModel shareInstance].currentSelectAddress) {
+               [YKSUserModel shareInstance].currentSelectAddress = info;
 
-                                                                       }
-                                                                       
-                                                                   }
-                                                                   if (isCreate) {
-                                                                       [bself gotoAddressVC:[UIViewController selectedMyLocation]];
-                                                                       
-                                                                       return;
-                                                                   } else {
-                                                                       _isShowAddressView = NO;
-                                                                       [YKSUserModel shareInstance].currentSelectAddress = info;
-                                                                       //这里就是了,拿到地址,删除旧地址
-                                                                       
-                                                                       [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
-                                                                       
-                                                                       NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
-                                                                       if (info[@"sendable"] && ![info[@"sendable"] boolValue]) {
-                                                                           NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
-                                                                           [self.addressButton setTitle:title
-                                                                                               forState:UIControlStateNormal];
-                                                                       } else {
-                                                                           [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
-                                                                                               forState:UIControlStateNormal];
-                                                                       }
-                                                                   }
-                                                               };
+           }
+           
+       }
+       if (isCreate) {
+           [bself gotoAddressVC:[UIViewController selectedMyLocation]];
+           
+           return;
+       } else {
+           _isShowAddressView = NO;
+           [YKSUserModel shareInstance].currentSelectAddress = info;
+           //这里就是了,拿到地址,删除旧地址
+           
+           [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
+           
+           NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
+           if (info[@"sendable"] && ![info[@"sendable"] boolValue]) {
+               NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
+               [self.addressButton setTitle:title
+                                   forState:UIControlStateNormal];
+           } else {
+               [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
+                                   forState:UIControlStateNormal];
+           }
+       }
+   };
        
         selectAddressView.removeViewCallBack = ^{
             _isShowAddressView = NO;
@@ -467,48 +476,48 @@
     selectAddressView = [YKSSelectAddressView showAddressViewToView:myVC.view
                                                               datas:@[[self currentAddressInfo]]
                                                            callback:^(NSDictionary *info, BOOL isCreate) {
-                                                            //新添
-                                                               self.info = info;
-                                                               self.isCreat = isCreate;
-                                                               
-                                                               [UIViewController selectedAddressArchiver:info];
-                                                               
-                                                               if (![[[YKSUserModel shareInstance]currentSelectAddress][@"id"]isEqualToString:info[@"id"]]) {
-                                                                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改地址？" message:@"确认修改地址将清空购物车" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                                                                   [alert show];
-                                                                   return ;
-                                                               }
-                                                               if (info) {
-                                                                   if (info[@"community_lat_lng"]) {
-                                                                       NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
-                                                                       [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
-                                                                       [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
-                                                                   }
-                                                                   if (![YKSUserModel shareInstance].currentSelectAddress) {
-                                                                       [YKSUserModel shareInstance].currentSelectAddress = info;
-                                                                   }
-                                                                   
-                                                               }
-                                                               if (isCreate) {
-                                                                   [bself gotoAddressVC:info];
-                                                               } else {
-                                                                   _isShowAddressView = NO;
-                                                                   [YKSUserModel shareInstance].currentSelectAddress = info;
-                                                                   //这里就是了,拿到地址,删除旧地址
-                                                                   
-                                                                   [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
-                                                                   
-                                                                   NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
-                                                                   if (info[@"sendable"] && ![info[@"sendable"] boolValue]) {
-                                                                       NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
-                                                                       [self.addressButton setTitle:title
-                                                                                           forState:UIControlStateNormal];
-                                                                   } else {
-                                                                       [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
-                                                                                           forState:UIControlStateNormal];
-                                                                   }
-                                                               }
-                                                           }];
+    //新添
+       self.info = info;
+       self.isCreat = isCreate;
+       
+       [UIViewController selectedAddressArchiver:info];
+       
+       if (![[[YKSUserModel shareInstance]currentSelectAddress][@"id"]isEqualToString:info[@"id"]]) {
+           UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改地址？" message:@"确认修改地址将清空购物车" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+           [alert show];
+           return ;
+       }
+       if (info) {
+           if (info[@"community_lat_lng"]) {
+               NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
+               [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
+               [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
+           }
+           if (![YKSUserModel shareInstance].currentSelectAddress) {
+               [YKSUserModel shareInstance].currentSelectAddress = info;
+           }
+           
+       }
+       if (isCreate) {
+           [bself gotoAddressVC:info];
+       } else {
+           _isShowAddressView = NO;
+           [YKSUserModel shareInstance].currentSelectAddress = info;
+           //这里就是了,拿到地址,删除旧地址
+           
+           [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
+           
+           NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
+           if (info[@"sendable"] && ![info[@"sendable"] boolValue]) {
+               NSString *title = [NSString stringWithFormat:@"%@(暂不支持配送)", tempString];
+               [self.addressButton setTitle:title
+                                   forState:UIControlStateNormal];
+           } else {
+               [self.addressButton setTitle:[NSString stringWithFormat:@"配送至:%@",tempString]
+                                   forState:UIControlStateNormal];
+           }
+       }
+    }];
     selectAddressView.removeViewCallBack = ^{
         
         

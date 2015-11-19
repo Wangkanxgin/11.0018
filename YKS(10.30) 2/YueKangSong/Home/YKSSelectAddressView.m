@@ -188,18 +188,10 @@
         if (indexPath.row == 0) {
             
             UITableViewCell *cell1=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell0"];
-            
-//            UILabel *lable=[[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, 10, 100, 20)];
-//            
-//            lable.text=@"定位到当前位置";
 
-    
             cell1.textLabel.text=@"定位到当前位置";
             
-
             cell1.imageView.image=[UIImage imageNamed:@"location_icon"];
-            
-//            [cell1.contentView addSubview:lable];
             
             return cell1;
         } else {

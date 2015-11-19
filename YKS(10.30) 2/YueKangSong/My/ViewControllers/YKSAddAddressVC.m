@@ -17,6 +17,7 @@
 #import "YKSUserModel.h"
 #import "YKSMyAddressViewcontroller.h"
 #import "YKSSelectAddressView.h"
+#import <INTULocationManager.h>
 
 @interface YKSAddAddressVC () <UITextFieldDelegate, UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
@@ -62,16 +63,6 @@
     [_streetField.superview addGestureRecognizer:tap];
     _detailAddressField.placeholder = @"楼层，门牌号";
     
-    //    _searchView = [[YKSSearchView alloc] initWithFrame:CGRectMake(0, 212, 280, 220)];
-    //    _searchView.backgroundColor = [UIColor yellowColor];
-    //    self.searchView.hidden = YES;
-    //    __weak YKSAddAddressVC *bself = self;
-    //    _searchView.callback = ^(NSDictionary *dic) {
-    //        bself.streetField.text = dic[@"name"];
-    //        [bself.view endEditing:YES];
-    //    };
-    //    [self.view addSubview:_searchView];
-    
     [_streetField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     if (!_addressInfo) {
@@ -88,8 +79,14 @@
     
     //判断所填写的地址是不是当前定位的地址
     if (_isCurrentLocation) {
+
+        if (![UIViewController selectedMyLocation]) {
+            
+            [self startSingleLocationRequest];
+            
+        }
         
-        NSDictionary *dic=[UIViewController selectedMyLocation];
+         NSDictionary *dic=[UIViewController selectedMyLocation];
         
         self.tableView.tableFooterView = nil;
         _nameField.text = @"";
@@ -144,6 +141,59 @@
     }
     
 }
+
+
+/**
+ *  获取ios设备当前位置（GPS 定位）
+ */
+- (void)startSingleLocationRequest {
+    INTULocationManager *locMgr = [INTULocationManager sharedInstance];
+    [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyNeighborhood
+                                       timeout:10.0f
+                                         block:^(CLLocation *currentLocation, INTULocationAccuracy achievedAccuracy, INTULocationStatus status) {
+                                             
+                                             NSString *latLongString = [[NSString alloc] initWithFormat:@"%f,%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude];
+                                             
+                                             //设置用户数据模型的经纬度赋值
+                                             if ([YKSUserModel shareInstance].lat == 0) {
+                                                 [YKSUserModel shareInstance].lat = currentLocation.coordinate.latitude;
+                                                 [YKSUserModel shareInstance].lng = currentLocation.coordinate.longitude;
+                                             }
+                                             
+                                             
+                                             //把当前位置(经纬度)传给服务器
+                                             if ([YKSUserModel isLogin]) {
+                                                 [GZBaseRequest locationUploadLat:currentLocation.coordinate.latitude
+                                                                              lng:currentLocation.coordinate.longitude
+                                                                         callback:^(id responseObject, NSError *error) {
+                                                                             
+                                                                         }];
+                                             }
+                                             
+                                             [[GZHTTPClient shareClient] GET:BaiduMapGeocoderApi
+                                                                  parameters:@{@"location": latLongString,
+                                                                               @"coordtype": @"wgs84ll",
+                                                                               @"ak": BaiduMapAK,
+                                                                               @"output": @"json"}
+                                              
+                                                                     success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                                         
+                                                                         if (responseObject && [responseObject[@"status"] integerValue] == 0) {
+                                                                             NSDictionary *dic = responseObject[@"result"];
+                                                                             
+                                                                             [UIViewController selectedCityArchiver:dic[@"addressComponent"]];
+                                                                             
+                                                                             [UIViewController setMyLocation:dic];
+                                                                             
+                                                                         }
+                                                                     }
+                                                                     failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                                         NSLog(@"error = %@", error);
+                                                                     }];
+                                         }];
+}
+
+
 
 - (IBAction)dingWei:(id)sender {
     
@@ -296,20 +346,6 @@
 
 - (IBAction)deleteAction:(id)sender {
     
-    //    if ([YKSUserModel shareInstance].currentSelectAddress) {
-    //
-    //        NSDictionary *info = [YKSUserModel shareInstance].currentSelectAddress;
-    //
-    //        NSString *tempString = [NSString stringWithFormat:@"%@", info[@"community"] ? info[@"community"] : @""];
-    //
-    //        if ([tempString isEqualToString:_addressInfo[@"community"]]) {
-    //
-    //
-    //            [YKSUserModel shareInstance].currentSelectAddress=[UIViewController selectedMyLocation];
-    //
-    //        }
-    //
-    //    }
     
     
     if ([YKSUserModel shareInstance].currentSelectAddress) {

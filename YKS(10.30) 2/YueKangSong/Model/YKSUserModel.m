@@ -175,6 +175,8 @@ NSString * const kUserInfo = @"userInfo";
     return _addressLists;
 }
 
+
+//设置当前选中地址
 - (void)setCurrentSelectAddress:(NSDictionary *)currentSelectAddress {
     [[NSUserDefaults standardUserDefaults] setObject:[YKSTools returnDic:currentSelectAddress] forKey:@"kCurrentSelectAddress"];
     
@@ -191,6 +193,8 @@ NSString * const kUserInfo = @"userInfo";
     }
 }
 
+
+//取出当前选中地址
 - (NSDictionary *)currentSelectAddress {
     if (!_currentSelectAddress) {
         _currentSelectAddress = [[NSUserDefaults standardUserDefaults]

@@ -162,6 +162,11 @@
     if (indexPath.section == 4)
     {
         if ([YKSUserModel isLogin]) {
+            
+            //干掉本地当前地址键值对
+            
+            [[YKSUserModel shareInstance] setCurrentSelectAddress:nil];
+            
             [YKSUserModel logout];
             YKSHomeTableViewController *homevc = [self.storyboard instantiateViewControllerWithIdentifier:@"YKSHomeTableViewController" ];
             [homevc.addressButton setTitle:@"我的位置" forState:UIControlStateNormal];
