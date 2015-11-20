@@ -32,8 +32,9 @@
 #import <UIButton+WebCache.h>
 #import "YKSRotaryPopViewController.h"
 #import "YKSAdvertisementController.h"
+#import "YKSScrollView.h"
 
-@interface YKSHomeTableViewController () <ImagePlayerViewDelegate,UIAlertViewDelegate,UIScrollViewDelegate>
+@interface YKSHomeTableViewController () <ImagePlayerViewDelegate,UIAlertViewDelegate,YKSScrollViewDelegate>
 @property (strong, nonatomic) ImagePlayerView *imagePlayview;
 @property (assign, nonatomic) BOOL isShowAddressView;
 @property (copy, nonatomic) NSArray *datas;
@@ -45,8 +46,8 @@
 @property(nonatomic,strong) NSMutableArray *imageArray;
 @property(nonatomic,strong)NSMutableArray *descArray;
 @property(nonatomic,strong)NSMutableArray *nameArray;
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UIPageControl *pageControl;
+//添加轮播视图
+@property (nonatomic,strong) YKSScrollView *scrollView;
 @property(nonatomic,strong)NSArray *drugDatas;
 @property (weak, nonatomic) IBOutlet UIButton *addressBtn;
 @end
@@ -90,25 +91,11 @@
                                           }
                                           if (ServerSuccess(responseObject)) {
                                               _imageURLStrings = responseObject[@"data"][@"data"];
-                                              _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH*_imageURLStrings.count, 0);
-                                              _pageControl.pageIndicatorTintColor= [UIColor colorWithRed:50.0/255 green:143.0/255 blue:250.0/255 alpha:1];
-                                              _pageControl.currentPageIndicatorTintColor = [UIColor redColor];
-                                              _pageControl.numberOfPages = _imageURLStrings.count;
-                                              _pageControl.currentPage = 0;
-                                              for (int i = 0; i<_imageURLStrings.count; i++) {
-                                                  //在每一个scrollView的可视范围内添加同等大小按钮
-                                                  UIButton *ImageButton = [UIButton buttonWithType:UIButtonTypeSystem];
-                                                  ImageButton.frame = CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, SCREEN_WIDTH / 320 * kCycleHeight);
-                                                  [ImageButton addTarget:self action:@selector(ImageButton:) forControlEvents:UIControlEventTouchUpInside];
-                                                  ImageButton.tag = i;
-                                                  
-                                                  UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(i*SCREEN_WIDTH, 0, SCREEN_WIDTH, _scrollView.bounds.size.height)];
-                                                  [iv sd_setImageWithURL:_imageURLStrings[i][@"imgurl"]placeholderImage:[UIImage imageNamed:@"defatul320"]];
-                                                  [_scrollView addSubview:iv];
-                                                  [_scrollView addSubview:ImageButton];
+                                              //调用轮播视图方法
+                                              [self.scrollView addScrollView:_imageURLStrings];
                                               }
                                               
-                                          } else {
+                                           else {
                                               [self showToastMessage:responseObject[@"msg"]];
                                           }
                                       }];
@@ -129,16 +116,13 @@
             printf( "\tFont: %s \n", [fontName UTF8String] );
         }
     }
-
     _addressBtn.frame = CGRectMake(0, 0, SCREEN_WIDTH - 10, 25);
     self.navigationItem.title = @"";
     self.tableView.tableHeaderView = [self tableviewHeaderView];
     
-    
     [self requestDrugCategoryList];
     
     [self requestData];
-    
 }
 
 //地址逻辑判断
@@ -156,22 +140,17 @@ if ([YKSUserModel isLogin]) {
     else {
         
         [self startSingleLocationRequest];
-        
     }
-    
 }
 else {
     
     [self startSingleLocationRequest];
-    
-    
 }
 
 
 [self setAddressBtnFrame];
 
 }
-
 
 //请求药品类别列表数据
 -(void)requestDrugCategoryList{
@@ -193,11 +172,6 @@ else {
         
     }];
 }
-
-
-
-
-
 
 //设置地址按钮frame
 -(void)setAddressBtnFrame{
@@ -227,11 +201,6 @@ else {
 
     [self setAddressBtnFrame];
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    NSInteger offset = scrollView.contentOffset.x/SCREEN_WIDTH;
-    _pageControl.currentPage = offset;
-}
-
 
 /*点击轮播视图的响应事件    */
 -(void)ImageButton:(UIButton *)button{
@@ -248,24 +217,10 @@ else {
 #pragma mark - custom
 - (UIView *)tableviewHeaderView {
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH / 320 * kCycleHeight)];
-    UIView *view = [[UIView alloc]initWithFrame:_scrollView.bounds];
-    [view addSubview:_scrollView];
-    _pageControl = [[UIPageControl alloc]init];
-    [view addSubview:_pageControl];
-    _pageControl.center = CGPointMake(SCREEN_WIDTH/2, _scrollView.bounds.size.height-10);
-    
-    _pageControl.currentPageIndicatorTintColor = [UIColor redColor];
-    _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:50.0/255 green:143.0/255 blue:250.0/255 alpha:1];
-
-    
-//    _pageControl.center = CGPointMake(SCREEN_WIDTH/2, _scrollView.bounds.size.height-50);
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.delegate = self;
-    _scrollView.bounces = NO;
-    _scrollView.pagingEnabled = YES;
-    return view;
-
+    //创建轮播图 设为表头
+    _scrollView = [[YKSScrollView alloc] init];
+    _scrollView.ScrollViewDelegate = self;
+    return _scrollView;
 }
 
 /**

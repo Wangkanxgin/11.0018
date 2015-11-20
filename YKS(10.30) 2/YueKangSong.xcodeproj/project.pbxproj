@@ -21,6 +21,7 @@
 		1CCD2C261BE8A81A00826278 /* YKSRecommenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */; };
 		1CCD2C271BE8A81A00826278 /* YKSReleaseButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */; };
 		1ED2C060D59F1070CB6AEE4D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D69E6ED74E7E95007A91D6BA /* libPods.a */; };
+		27D1659B1BFEE9CE0036A3F5 /* YKSScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */; };
 		27D2A7601BF4941200217818 /* YKSRotaryPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D2A75D1BF4941200217818 /* YKSRotaryPopViewController.m */; };
 		27D2A7611BF4941200217818 /* YKSAdvertisementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D2A75F1BF4941200217818 /* YKSAdvertisementController.m */; };
 		313778CE1BFB0179008A04BC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 313778CD1BFB0179008A04BC /* CFNetwork.framework */; };
@@ -253,6 +254,8 @@
 		1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSRecommenViewController.m; sourceTree = "<group>"; };
 		1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSReleaseButtonCell.h; sourceTree = "<group>"; };
 		1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSReleaseButtonCell.m; sourceTree = "<group>"; };
+		27D165991BFEE9CE0036A3F5 /* YKSScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSScrollView.h; sourceTree = "<group>"; };
+		27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSScrollView.m; sourceTree = "<group>"; };
 		27D2A75C1BF4941200217818 /* YKSRotaryPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSRotaryPopViewController.h; sourceTree = "<group>"; };
 		27D2A75D1BF4941200217818 /* YKSRotaryPopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSRotaryPopViewController.m; sourceTree = "<group>"; };
 		27D2A75E1BF4941200217818 /* YKSAdvertisementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSAdvertisementController.h; sourceTree = "<group>"; };
@@ -607,6 +610,15 @@
 			path = "Drug New";
 			sourceTree = "<group>";
 		};
+		27D165981BFEE9C30036A3F5 /* YKSScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				27D165991BFEE9CE0036A3F5 /* YKSScrollView.h */,
+				27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */,
+			);
+			path = YKSScrollView;
+			sourceTree = "<group>";
+		};
 		313778D71BFB01BF008A04BC /* ping++ */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +824,7 @@
 				F34ABEF11B8EB32B00E75F8E /* sellOver.png */,
 				3E9C46241B0618C9009CAC1D /* YKSHomeTableViewController.h */,
 				3E9C46251B0618C9009CAC1D /* YKSHomeTableViewController.m */,
+				27D165981BFEE9C30036A3F5 /* YKSScrollView */,
 				27D2A75C1BF4941200217818 /* YKSRotaryPopViewController.h */,
 				27D2A75D1BF4941200217818 /* YKSRotaryPopViewController.m */,
 				27D2A75E1BF4941200217818 /* YKSAdvertisementController.h */,
@@ -1530,6 +1543,7 @@
 				57C284A31BBB84490038AED9 /* FMDatabaseAdditions.m in Sources */,
 				1CCD2C211BE8A81A00826278 /* YKSFormInformation.m in Sources */,
 				3ECFDFE31B1C69980014899F /* YKSWebViewController.m in Sources */,
+				27D1659B1BFEE9CE0036A3F5 /* YKSScrollView.m in Sources */,
 				3E9C46291B06191E009CAC1D /* YKSDrugCategoryListVC.m in Sources */,
 				3E6756741B1C29B600CE946D /* YKSMsgTableViewController.m in Sources */,
 				1CCD2C221BE8A81A00826278 /* YKSFormViewCell.m in Sources */,
