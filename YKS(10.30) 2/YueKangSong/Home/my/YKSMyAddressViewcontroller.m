@@ -27,21 +27,13 @@
 @implementation YKSMyAddressViewcontroller
 
 - (void)viewDidLoad {
-    
-    
     [super viewDidLoad];
     
     [self createLeftBtn];
     
-    
-   
-   
-   
-
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
     [self createBottomBtn];
 }
 

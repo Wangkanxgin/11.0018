@@ -11,15 +11,6 @@
 		1CA729401BEB25EF00875D80 /* gengduo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA7293E1BEB25EF00875D80 /* gengduo@3x.png */; };
 		1CA729431BEB265F00875D80 /* screenshot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA729411BEB265F00875D80 /* screenshot@2x.png */; };
 		1CA729441BEB265F00875D80 /* screenshot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CA729421BEB265F00875D80 /* screenshot@3x.png */; };
-		1CCD2C1F1BE8A81A00826278 /* EachGroupDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */; };
-		1CCD2C201BE8A81A00826278 /* YKSDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C101BE8A81A00826278 /* YKSDetails.m */; };
-		1CCD2C211BE8A81A00826278 /* YKSFormInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */; };
-		1CCD2C221BE8A81A00826278 /* YKSFormViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */; };
-		1CCD2C231BE8A81A00826278 /* YKSOneBuyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */; };
-		1CCD2C241BE8A81A00826278 /* YKSPlanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */; };
-		1CCD2C251BE8A81A00826278 /* YKSPlanDisPlayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */; };
-		1CCD2C261BE8A81A00826278 /* YKSRecommenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */; };
-		1CCD2C271BE8A81A00826278 /* YKSReleaseButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */; };
 		1ED2C060D59F1070CB6AEE4D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D69E6ED74E7E95007A91D6BA /* libPods.a */; };
 		27D1659B1BFEE9CE0036A3F5 /* YKSScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */; };
 		27D2A7601BF4941200217818 /* YKSRotaryPopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D2A75D1BF4941200217818 /* YKSRotaryPopViewController.m */; };
@@ -166,6 +157,15 @@
 		57C284A61BBB84490038AED9 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C284A11BBB84490038AED9 /* FMResultSet.m */; };
 		57C284A91BBB84640038AED9 /* YKSFMDBManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C284A81BBB84640038AED9 /* YKSFMDBManger.m */; };
 		81371BDE1B4A478500BFA4FD /* UIViewController+YKSArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 81371BDD1B4A478500BFA4FD /* UIViewController+YKSArchive.m */; };
+		9AFE1E8F1C02C8E90052AA9D /* EachGroupDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E8A1C02C8E90052AA9D /* EachGroupDetail.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1E901C02C8E90052AA9D /* YKSDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E8C1C02C8E90052AA9D /* YKSDetails.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1E911C02C8E90052AA9D /* YKSFormInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E8E1C02C8E90052AA9D /* YKSFormInformation.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1E941C02C8F80052AA9D /* YKSRecommenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E931C02C8F80052AA9D /* YKSRecommenViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1E9F1C02C90B0052AA9D /* YKSFormViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E961C02C90B0052AA9D /* YKSFormViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1EA01C02C90B0052AA9D /* YKSOneBuyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E981C02C90B0052AA9D /* YKSOneBuyCell.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1EA11C02C90B0052AA9D /* YKSPlanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E9A1C02C90B0052AA9D /* YKSPlanCell.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1EA21C02C90B0052AA9D /* YKSPlanDisPlayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E9C1C02C90B0052AA9D /* YKSPlanDisPlayCell.m */; settings = {ASSET_TAGS = (); }; };
+		9AFE1EA31C02C90B0052AA9D /* YKSReleaseButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE1E9E1C02C90B0052AA9D /* YKSReleaseButtonCell.m */; settings = {ASSET_TAGS = (); }; };
 		F31001A11B94369A00E1C822 /* YKSYQMTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F31001A01B94369A00E1C822 /* YKSYQMTableViewController.m */; };
 		F31001AB1B94438600E1C822 /* 33.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F31001AA1B94438600E1C822 /* 33.jpg */; };
 		F31001AD1B94694D00E1C822 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = F31001AC1B94694D00E1C822 /* 3.png */; };
@@ -236,24 +236,6 @@
 		1CA7293E1BEB25EF00875D80 /* gengduo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gengduo@3x.png"; sourceTree = "<group>"; };
 		1CA729411BEB265F00875D80 /* screenshot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot@2x.png"; sourceTree = "<group>"; };
 		1CA729421BEB265F00875D80 /* screenshot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot@3x.png"; sourceTree = "<group>"; };
-		1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EachGroupDetail.h; path = ../EachGroupDetail.h; sourceTree = "<group>"; };
-		1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EachGroupDetail.m; path = ../EachGroupDetail.m; sourceTree = "<group>"; };
-		1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSDetails.h; path = ../YKSDetails.h; sourceTree = "<group>"; };
-		1CCD2C101BE8A81A00826278 /* YKSDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSDetails.m; path = ../YKSDetails.m; sourceTree = "<group>"; };
-		1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSFormInformation.h; path = ../YKSFormInformation.h; sourceTree = "<group>"; };
-		1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSFormInformation.m; path = ../YKSFormInformation.m; sourceTree = "<group>"; };
-		1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSFormViewCell.h; path = ../../YKSFormViewCell.h; sourceTree = "<group>"; };
-		1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSFormViewCell.m; path = ../../YKSFormViewCell.m; sourceTree = "<group>"; };
-		1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSOneBuyCell.h; path = ../../YKSOneBuyCell.h; sourceTree = "<group>"; };
-		1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSOneBuyCell.m; path = ../../YKSOneBuyCell.m; sourceTree = "<group>"; };
-		1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSPlanCell.h; path = ../../YKSPlanCell.h; sourceTree = "<group>"; };
-		1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSPlanCell.m; path = ../../YKSPlanCell.m; sourceTree = "<group>"; };
-		1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSPlanDisPlayCell.h; path = ../../YKSPlanDisPlayCell.h; sourceTree = "<group>"; };
-		1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSPlanDisPlayCell.m; path = ../../YKSPlanDisPlayCell.m; sourceTree = "<group>"; };
-		1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSRecommenViewController.h; path = ../../YKSRecommenViewController.h; sourceTree = "<group>"; };
-		1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSRecommenViewController.m; path = ../../YKSRecommenViewController.m; sourceTree = "<group>"; };
-		1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSReleaseButtonCell.h; path = ../../YKSReleaseButtonCell.h; sourceTree = "<group>"; };
-		1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSReleaseButtonCell.m; path = ../../YKSReleaseButtonCell.m; sourceTree = "<group>"; };
 		27D165991BFEE9CE0036A3F5 /* YKSScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSScrollView.h; sourceTree = "<group>"; };
 		27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSScrollView.m; sourceTree = "<group>"; };
 		27D2A75C1BF4941200217818 /* YKSRotaryPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSRotaryPopViewController.h; sourceTree = "<group>"; };
@@ -491,6 +473,24 @@
 		57C284A81BBB84640038AED9 /* YKSFMDBManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSFMDBManger.m; sourceTree = "<group>"; };
 		81371BDC1B4A478500BFA4FD /* UIViewController+YKSArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YKSArchive.h"; sourceTree = "<group>"; };
 		81371BDD1B4A478500BFA4FD /* UIViewController+YKSArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YKSArchive.m"; sourceTree = "<group>"; };
+		9AFE1E891C02C8E90052AA9D /* EachGroupDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EachGroupDetail.h; sourceTree = "<group>"; };
+		9AFE1E8A1C02C8E90052AA9D /* EachGroupDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EachGroupDetail.m; sourceTree = "<group>"; };
+		9AFE1E8B1C02C8E90052AA9D /* YKSDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSDetails.h; sourceTree = "<group>"; };
+		9AFE1E8C1C02C8E90052AA9D /* YKSDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSDetails.m; sourceTree = "<group>"; };
+		9AFE1E8D1C02C8E90052AA9D /* YKSFormInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSFormInformation.h; sourceTree = "<group>"; };
+		9AFE1E8E1C02C8E90052AA9D /* YKSFormInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSFormInformation.m; sourceTree = "<group>"; };
+		9AFE1E921C02C8F80052AA9D /* YKSRecommenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSRecommenViewController.h; sourceTree = "<group>"; };
+		9AFE1E931C02C8F80052AA9D /* YKSRecommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSRecommenViewController.m; sourceTree = "<group>"; };
+		9AFE1E951C02C90B0052AA9D /* YKSFormViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSFormViewCell.h; sourceTree = "<group>"; };
+		9AFE1E961C02C90B0052AA9D /* YKSFormViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSFormViewCell.m; sourceTree = "<group>"; };
+		9AFE1E971C02C90B0052AA9D /* YKSOneBuyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSOneBuyCell.h; sourceTree = "<group>"; };
+		9AFE1E981C02C90B0052AA9D /* YKSOneBuyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSOneBuyCell.m; sourceTree = "<group>"; };
+		9AFE1E991C02C90B0052AA9D /* YKSPlanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSPlanCell.h; sourceTree = "<group>"; };
+		9AFE1E9A1C02C90B0052AA9D /* YKSPlanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSPlanCell.m; sourceTree = "<group>"; };
+		9AFE1E9B1C02C90B0052AA9D /* YKSPlanDisPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSPlanDisPlayCell.h; sourceTree = "<group>"; };
+		9AFE1E9C1C02C90B0052AA9D /* YKSPlanDisPlayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSPlanDisPlayCell.m; sourceTree = "<group>"; };
+		9AFE1E9D1C02C90B0052AA9D /* YKSReleaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSReleaseButtonCell.h; sourceTree = "<group>"; };
+		9AFE1E9E1C02C90B0052AA9D /* YKSReleaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSReleaseButtonCell.m; sourceTree = "<group>"; };
 		C5FC0ACFEA054E2AA0CACE28 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D69E6ED74E7E95007A91D6BA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F310019F1B94369A00E1C822 /* YKSYQMTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSYQMTableViewController.h; sourceTree = "<group>"; };
@@ -585,16 +585,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1CCD2C0C1BE8A81A00826278 /* Drug New */ = {
-			isa = PBXGroup;
-			children = (
-				27D1659D1BFF1EF20036A3F5 /* Cortller */,
-				27D1659E1BFF1EF90036A3F5 /* View */,
-				27D1659C1BFF1EEB0036A3F5 /* Model */,
-			);
-			path = "Drug New";
-			sourceTree = "<group>";
-		};
 		27D165981BFEE9C30036A3F5 /* YKSScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,47 +592,6 @@
 				27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */,
 			);
 			path = YKSScrollView;
-			sourceTree = "<group>";
-		};
-		27D1659C1BFF1EEB0036A3F5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */,
-				1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */,
-				1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */,
-				1CCD2C101BE8A81A00826278 /* YKSDetails.m */,
-				1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */,
-				1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		27D1659D1BFF1EF20036A3F5 /* Cortller */ = {
-			isa = PBXGroup;
-			children = (
-				1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */,
-				1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */,
-			);
-			name = Cortller;
-			path = Model/Cortller;
-			sourceTree = "<group>";
-		};
-		27D1659E1BFF1EF90036A3F5 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */,
-				1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */,
-				1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */,
-				1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */,
-				1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */,
-				1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */,
-				1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */,
-				1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */,
-				1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */,
-				1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */,
-			);
-			name = View;
-			path = Model/View;
 			sourceTree = "<group>";
 		};
 		313778D71BFB01BF008A04BC /* ping++ */ = {
@@ -802,7 +751,7 @@
 				3EFFB6AB1B25693800692CAA /* HealthKitUtils.m */,
 				3E2705A11B02272B00FC6010 /* YKSTabBarViewController.h */,
 				3E2705A21B02272B00FC6010 /* YKSTabBarViewController.m */,
-				1CCD2C0C1BE8A81A00826278 /* Drug New */,
+				9AFE1E851C02C8A50052AA9D /* Drug New */,
 				3E9C461C1B05E2EE009CAC1D /* Views */,
 				3E9C46161B05C37A009CAC1D /* Login */,
 				3E9C46021B058B84009CAC1D /* Utils */,
@@ -1124,6 +1073,55 @@
 				57C284A11BBB84490038AED9 /* FMResultSet.m */,
 			);
 			path = FMDB;
+			sourceTree = "<group>";
+		};
+		9AFE1E851C02C8A50052AA9D /* Drug New */ = {
+			isa = PBXGroup;
+			children = (
+				9AFE1E881C02C8CF0052AA9D /* View */,
+				9AFE1E871C02C8C40052AA9D /* Controller */,
+				9AFE1E861C02C8B90052AA9D /* Model */,
+			);
+			path = "Drug New";
+			sourceTree = "<group>";
+		};
+		9AFE1E861C02C8B90052AA9D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9AFE1E891C02C8E90052AA9D /* EachGroupDetail.h */,
+				9AFE1E8A1C02C8E90052AA9D /* EachGroupDetail.m */,
+				9AFE1E8B1C02C8E90052AA9D /* YKSDetails.h */,
+				9AFE1E8C1C02C8E90052AA9D /* YKSDetails.m */,
+				9AFE1E8D1C02C8E90052AA9D /* YKSFormInformation.h */,
+				9AFE1E8E1C02C8E90052AA9D /* YKSFormInformation.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9AFE1E871C02C8C40052AA9D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9AFE1E921C02C8F80052AA9D /* YKSRecommenViewController.h */,
+				9AFE1E931C02C8F80052AA9D /* YKSRecommenViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9AFE1E881C02C8CF0052AA9D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AFE1E951C02C90B0052AA9D /* YKSFormViewCell.h */,
+				9AFE1E961C02C90B0052AA9D /* YKSFormViewCell.m */,
+				9AFE1E971C02C90B0052AA9D /* YKSOneBuyCell.h */,
+				9AFE1E981C02C90B0052AA9D /* YKSOneBuyCell.m */,
+				9AFE1E991C02C90B0052AA9D /* YKSPlanCell.h */,
+				9AFE1E9A1C02C90B0052AA9D /* YKSPlanCell.m */,
+				9AFE1E9B1C02C90B0052AA9D /* YKSPlanDisPlayCell.h */,
+				9AFE1E9C1C02C90B0052AA9D /* YKSPlanDisPlayCell.m */,
+				9AFE1E9D1C02C90B0052AA9D /* YKSReleaseButtonCell.h */,
+				9AFE1E9E1C02C90B0052AA9D /* YKSReleaseButtonCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A8C8A75B36F48946DD4083FD /* Pods */ = {
@@ -1516,13 +1514,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CCD2C231BE8A81A00826278 /* YKSOneBuyCell.m in Sources */,
 				3E9C46121B058B84009CAC1D /* YKSTools.m in Sources */,
-				1CCD2C261BE8A81A00826278 /* YKSRecommenViewController.m in Sources */,
 				3E958EBF1B1453CA00A18783 /* YKSSearchController.m in Sources */,
 				3E958EC21B145BA000A18783 /* YKSSearchBar.m in Sources */,
 				3E9C465F1B08399D009CAC1D /* YKSAddressListViewController.m in Sources */,
-				1CCD2C1F1BE8A81A00826278 /* EachGroupDetail.m in Sources */,
 				3E9C45F41B046635009CAC1D /* YKSSubSpecialCell.m in Sources */,
 				F3499F8E1B9D204700B5D07B /* YKSUserViewController.m in Sources */,
 				578D81A81BE30D1700DCFF4B /* YKSHomeTableViewCell1.m in Sources */,
@@ -1540,8 +1535,8 @@
 				31659EB51BA021FB00F65F3A /* YKSDrugShuoMingViewController.m in Sources */,
 				3E9C46261B0618C9009CAC1D /* YKSHomeTableViewController.m in Sources */,
 				3EF6393E1B15CF0300858F3E /* YKSCouponListCell.m in Sources */,
+				9AFE1E901C02C8E90052AA9D /* YKSDetails.m in Sources */,
 				27D2A7611BF4941200217818 /* YKSAdvertisementController.m in Sources */,
-				1CCD2C251BE8A81A00826278 /* YKSPlanDisPlayCell.m in Sources */,
 				57C284A91BBB84640038AED9 /* YKSFMDBManger.m in Sources */,
 				3EFB3CA61B158B3F00107809 /* YKSCloseButton.m in Sources */,
 				57B3EF471BBB82DE004F76F7 /* YKSRunningManViewController.m in Sources */,
@@ -1549,7 +1544,6 @@
 				575CB0721BA7B90F002578ED /* pinyin.c in Sources */,
 				3E2705D71B02DBCE00FC6010 /* GZHTTPClient.m in Sources */,
 				3E9C46411B0725A6009CAC1D /* YKSShoppingCartVC.m in Sources */,
-				1CCD2C241BE8A81A00826278 /* YKSPlanCell.m in Sources */,
 				3E9C46111B058B84009CAC1D /* YKSConstants.m in Sources */,
 				3E9C45FA1B04C65C009CAC1D /* YKSDrug.m in Sources */,
 				3E67566E1B1BEB0F00CE946D /* YKSAboutViewController.m in Sources */,
@@ -1562,17 +1556,17 @@
 				31663CD01BA153F500608460 /* YKSdrugStoreViewController.m in Sources */,
 				F34EB3801B9ABB9700D0D47D /* Harpy.m in Sources */,
 				3178B8CA1BA6A6F100B390E4 /* YKSCityViewController.m in Sources */,
+				9AFE1EA11C02C90B0052AA9D /* YKSPlanCell.m in Sources */,
 				57C284A51BBB84490038AED9 /* FMDatabaseQueue.m in Sources */,
 				3E2A10F51B01F3BA00DE1E4C /* YKSAppDelegate.m in Sources */,
+				9AFE1E8F1C02C8E90052AA9D /* EachGroupDetail.m in Sources */,
 				F31001A11B94369A00E1C822 /* YKSYQMTableViewController.m in Sources */,
 				3E9C46631B08399D009CAC1D /* YKSAddressListCell.m in Sources */,
 				57C284A31BBB84490038AED9 /* FMDatabaseAdditions.m in Sources */,
-				1CCD2C211BE8A81A00826278 /* YKSFormInformation.m in Sources */,
 				3ECFDFE31B1C69980014899F /* YKSWebViewController.m in Sources */,
 				27D1659B1BFEE9CE0036A3F5 /* YKSScrollView.m in Sources */,
 				3E9C46291B06191E009CAC1D /* YKSDrugCategoryListVC.m in Sources */,
 				3E6756741B1C29B600CE946D /* YKSMsgTableViewController.m in Sources */,
-				1CCD2C221BE8A81A00826278 /* YKSFormViewCell.m in Sources */,
 				3E2705D61B02DBCE00FC6010 /* GZBaseRequest.m in Sources */,
 				57A4B97E1BD8B91400EE29FC /* YKSMyAddressViewcontroller.m in Sources */,
 				3E958EA81B12B45F00A18783 /* YKSShoppingCartBuyVC.m in Sources */,
@@ -1581,10 +1575,10 @@
 				3EFFB6AC1B25693800692CAA /* HealthKitUtils.m in Sources */,
 				3E9C463D1B06E256009CAC1D /* YKSDrugInfoCell.m in Sources */,
 				3E958EAE1B12C06C00A18783 /* YKSDrugCategoryListCell.m in Sources */,
+				9AFE1E911C02C8E90052AA9D /* YKSFormInformation.m in Sources */,
 				3E18E9E31B5F51E6008ACC2D /* YKSSearchStreetVC.m in Sources */,
 				3E8905471B03515C00ACF5AD /* YKSUserModel.m in Sources */,
 				3EFFB7421B2860EF00692CAA /* YKSMyHealthViewController.m in Sources */,
-				1CCD2C201BE8A81A00826278 /* YKSDetails.m in Sources */,
 				3E2705AE1B022AC000FC6010 /* YKSQRCodeViewController.m in Sources */,
 				F3D967FB1B9C492500309831 /* YKSTableViewController.m in Sources */,
 				3EA119DF1B0B74240073949F /* YKSShoppingCartListCell.m in Sources */,
@@ -1594,11 +1588,14 @@
 				3E958EA51B1169F300A18783 /* YKSOrderConfirmView.m in Sources */,
 				3E9C462F1B06CC5C009CAC1D /* YKSDrugDetailViewController.m in Sources */,
 				575CB06F1BA7B866002578ED /* ChineseString.m in Sources */,
+				9AFE1EA21C02C90B0052AA9D /* YKSPlanDisPlayCell.m in Sources */,
 				3E97BBA41B429F6000BA8C26 /* YKSWelcomeViewController.m in Sources */,
 				3E958EB11B12E4AA00A18783 /* YKSOrderListCell.m in Sources */,
 				3EF639411B16EE1000858F3E /* YKSMyInfoDetailVC.m in Sources */,
 				3E958E991B0ECD2300A18783 /* YKSSelectAddressView.m in Sources */,
+				9AFE1EA31C02C90B0052AA9D /* YKSReleaseButtonCell.m in Sources */,
 				3EF639441B1702A500858F3E /* YKSHomeListCell.m in Sources */,
+				9AFE1E941C02C8F80052AA9D /* YKSRecommenViewController.m in Sources */,
 				3E6756711B1C267300CE946D /* YKSRegionViewController.m in Sources */,
 				3E9C46601B08399D009CAC1D /* YKSCouponViewController.m in Sources */,
 				3E9C46661B083D33009CAC1D /* YKSMyCollectVC.m in Sources */,
@@ -1609,11 +1606,12 @@
 				3E9C45F11B046353009CAC1D /* YKSSubSpecialListTableViewController.m in Sources */,
 				3E958EAB1B12B79800A18783 /* YKSShoppingCartBuyCell.m in Sources */,
 				3E9C45F71B047E95009CAC1D /* YKSDrugListViewController.m in Sources */,
-				1CCD2C271BE8A81A00826278 /* YKSReleaseButtonCell.m in Sources */,
 				3EA119EB1B0E0E920073949F /* YKSBuyCell.m in Sources */,
 				27D2A7601BF4941200217818 /* YKSRotaryPopViewController.m in Sources */,
 				3E958EB81B135C2600A18783 /* YKSSelectAddressListCell.m in Sources */,
+				9AFE1E9F1C02C90B0052AA9D /* YKSFormViewCell.m in Sources */,
 				3E9C46611B08399D009CAC1D /* YKSMyViewController.m in Sources */,
+				9AFE1EA01C02C90B0052AA9D /* YKSOneBuyCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

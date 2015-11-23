@@ -125,9 +125,7 @@
 }
 
 //地址逻辑判断
-
 -(void)diZhiLuoJiPanDuan{
-
 if ([YKSUserModel isLogin]) {
     
     NSDictionary *dic=[YKSUserModel shareInstance].currentSelectAddress;
@@ -183,10 +181,8 @@ else {
 -(void)setAddressBtnTitle{
     
     NSDictionary *dic=[UIViewController selectedMyLocation];
-    
     NSString *str=dic[@"formatted_address"];
     if (str) {
-        
         [self.addressBtn setTitle:[NSString stringWithFormat:@"配送至:%@",str] forState:UIControlStateNormal];
     }
 
