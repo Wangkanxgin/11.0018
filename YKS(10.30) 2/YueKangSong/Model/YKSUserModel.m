@@ -175,6 +175,12 @@ NSString * const kUserInfo = @"userInfo";
     return _addressLists;
 }
 
+//删除当前选中地址
+- (void)deleteCurrentSelectAddress {
+    [[NSUserDefaults standardUserDefaults] setObject:[YKSTools returnDic:nil] forKey:@"kCurrentSelectAddress"];
+    
+}
+
 
 //设置当前选中地址
 - (void)setCurrentSelectAddress:(NSDictionary *)currentSelectAddress {

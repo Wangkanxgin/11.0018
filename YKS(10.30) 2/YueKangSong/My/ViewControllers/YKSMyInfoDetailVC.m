@@ -165,7 +165,7 @@
             
             //干掉本地当前地址键值对
             
-            [[YKSUserModel shareInstance] setCurrentSelectAddress:nil];
+            [[YKSUserModel shareInstance] deleteCurrentSelectAddress];
             
             [YKSUserModel logout];
             YKSHomeTableViewController *homevc = [self.storyboard instantiateViewControllerWithIdentifier:@"YKSHomeTableViewController" ];

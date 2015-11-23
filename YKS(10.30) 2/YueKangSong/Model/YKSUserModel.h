@@ -56,6 +56,7 @@
  */
 + (void)setTelephone:(NSString *)telephone;
 
+- (void)deleteCurrentSelectAddress;
 
 @property (nonatomic, readonly) NSString *userId;
 
