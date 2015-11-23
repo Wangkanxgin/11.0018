@@ -48,6 +48,7 @@
 //添加轮播视图
 @property (nonatomic,strong) YKSScrollView *scrollView;
 @property(nonatomic,strong)NSArray *drugDatas;
+//当前地址button
 @property (weak, nonatomic) IBOutlet UIButton *addressBtn;
 @end
 
@@ -69,7 +70,6 @@
             [self.tableView reloadData];
         }
         [GZBaseRequest specialListCallback:^(id responseObject, NSError *error) {
-            //        NSLog(@"responseObject = %@", responseObject);
             if (ServerSuccess(responseObject)) {
                 _datas = responseObject[@"data"][@"list"];
                 [self.tableView reloadData];

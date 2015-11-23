@@ -236,24 +236,24 @@
 		1CA7293E1BEB25EF00875D80 /* gengduo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gengduo@3x.png"; sourceTree = "<group>"; };
 		1CA729411BEB265F00875D80 /* screenshot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot@2x.png"; sourceTree = "<group>"; };
 		1CA729421BEB265F00875D80 /* screenshot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot@3x.png"; sourceTree = "<group>"; };
-		1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EachGroupDetail.h; sourceTree = "<group>"; };
-		1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EachGroupDetail.m; sourceTree = "<group>"; };
-		1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSDetails.h; sourceTree = "<group>"; };
-		1CCD2C101BE8A81A00826278 /* YKSDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSDetails.m; sourceTree = "<group>"; };
-		1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSFormInformation.h; sourceTree = "<group>"; };
-		1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSFormInformation.m; sourceTree = "<group>"; };
-		1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSFormViewCell.h; sourceTree = "<group>"; };
-		1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSFormViewCell.m; sourceTree = "<group>"; };
-		1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSOneBuyCell.h; sourceTree = "<group>"; };
-		1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSOneBuyCell.m; sourceTree = "<group>"; };
-		1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSPlanCell.h; sourceTree = "<group>"; };
-		1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSPlanCell.m; sourceTree = "<group>"; };
-		1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSPlanDisPlayCell.h; sourceTree = "<group>"; };
-		1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSPlanDisPlayCell.m; sourceTree = "<group>"; };
-		1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSRecommenViewController.h; sourceTree = "<group>"; };
-		1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSRecommenViewController.m; sourceTree = "<group>"; };
-		1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSReleaseButtonCell.h; sourceTree = "<group>"; };
-		1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSReleaseButtonCell.m; sourceTree = "<group>"; };
+		1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EachGroupDetail.h; path = ../EachGroupDetail.h; sourceTree = "<group>"; };
+		1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EachGroupDetail.m; path = ../EachGroupDetail.m; sourceTree = "<group>"; };
+		1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSDetails.h; path = ../YKSDetails.h; sourceTree = "<group>"; };
+		1CCD2C101BE8A81A00826278 /* YKSDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSDetails.m; path = ../YKSDetails.m; sourceTree = "<group>"; };
+		1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSFormInformation.h; path = ../YKSFormInformation.h; sourceTree = "<group>"; };
+		1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSFormInformation.m; path = ../YKSFormInformation.m; sourceTree = "<group>"; };
+		1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSFormViewCell.h; path = ../../YKSFormViewCell.h; sourceTree = "<group>"; };
+		1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSFormViewCell.m; path = ../../YKSFormViewCell.m; sourceTree = "<group>"; };
+		1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSOneBuyCell.h; path = ../../YKSOneBuyCell.h; sourceTree = "<group>"; };
+		1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSOneBuyCell.m; path = ../../YKSOneBuyCell.m; sourceTree = "<group>"; };
+		1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSPlanCell.h; path = ../../YKSPlanCell.h; sourceTree = "<group>"; };
+		1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSPlanCell.m; path = ../../YKSPlanCell.m; sourceTree = "<group>"; };
+		1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSPlanDisPlayCell.h; path = ../../YKSPlanDisPlayCell.h; sourceTree = "<group>"; };
+		1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSPlanDisPlayCell.m; path = ../../YKSPlanDisPlayCell.m; sourceTree = "<group>"; };
+		1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSRecommenViewController.h; path = ../../YKSRecommenViewController.h; sourceTree = "<group>"; };
+		1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSRecommenViewController.m; path = ../../YKSRecommenViewController.m; sourceTree = "<group>"; };
+		1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKSReleaseButtonCell.h; path = ../../YKSReleaseButtonCell.h; sourceTree = "<group>"; };
+		1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YKSReleaseButtonCell.m; path = ../../YKSReleaseButtonCell.m; sourceTree = "<group>"; };
 		27D165991BFEE9CE0036A3F5 /* YKSScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSScrollView.h; sourceTree = "<group>"; };
 		27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKSScrollView.m; sourceTree = "<group>"; };
 		27D2A75C1BF4941200217818 /* YKSRotaryPopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKSRotaryPopViewController.h; sourceTree = "<group>"; };
@@ -588,24 +588,9 @@
 		1CCD2C0C1BE8A81A00826278 /* Drug New */ = {
 			isa = PBXGroup;
 			children = (
-				1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */,
-				1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */,
-				1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */,
-				1CCD2C101BE8A81A00826278 /* YKSDetails.m */,
-				1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */,
-				1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */,
-				1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */,
-				1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */,
-				1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */,
-				1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */,
-				1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */,
-				1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */,
-				1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */,
-				1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */,
-				1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */,
-				1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */,
-				1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */,
-				1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */,
+				27D1659D1BFF1EF20036A3F5 /* Cortller */,
+				27D1659E1BFF1EF90036A3F5 /* View */,
+				27D1659C1BFF1EEB0036A3F5 /* Model */,
 			);
 			path = "Drug New";
 			sourceTree = "<group>";
@@ -617,6 +602,47 @@
 				27D1659A1BFEE9CE0036A3F5 /* YKSScrollView.m */,
 			);
 			path = YKSScrollView;
+			sourceTree = "<group>";
+		};
+		27D1659C1BFF1EEB0036A3F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1CCD2C0D1BE8A81A00826278 /* EachGroupDetail.h */,
+				1CCD2C0E1BE8A81A00826278 /* EachGroupDetail.m */,
+				1CCD2C0F1BE8A81A00826278 /* YKSDetails.h */,
+				1CCD2C101BE8A81A00826278 /* YKSDetails.m */,
+				1CCD2C111BE8A81A00826278 /* YKSFormInformation.h */,
+				1CCD2C121BE8A81A00826278 /* YKSFormInformation.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		27D1659D1BFF1EF20036A3F5 /* Cortller */ = {
+			isa = PBXGroup;
+			children = (
+				1CCD2C1B1BE8A81A00826278 /* YKSRecommenViewController.h */,
+				1CCD2C1C1BE8A81A00826278 /* YKSRecommenViewController.m */,
+			);
+			name = Cortller;
+			path = Model/Cortller;
+			sourceTree = "<group>";
+		};
+		27D1659E1BFF1EF90036A3F5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1CCD2C131BE8A81A00826278 /* YKSFormViewCell.h */,
+				1CCD2C141BE8A81A00826278 /* YKSFormViewCell.m */,
+				1CCD2C151BE8A81A00826278 /* YKSOneBuyCell.h */,
+				1CCD2C161BE8A81A00826278 /* YKSOneBuyCell.m */,
+				1CCD2C171BE8A81A00826278 /* YKSPlanCell.h */,
+				1CCD2C181BE8A81A00826278 /* YKSPlanCell.m */,
+				1CCD2C191BE8A81A00826278 /* YKSPlanDisPlayCell.h */,
+				1CCD2C1A1BE8A81A00826278 /* YKSPlanDisPlayCell.m */,
+				1CCD2C1D1BE8A81A00826278 /* YKSReleaseButtonCell.h */,
+				1CCD2C1E1BE8A81A00826278 /* YKSReleaseButtonCell.m */,
+			);
+			name = View;
+			path = Model/View;
 			sourceTree = "<group>";
 		};
 		313778D71BFB01BF008A04BC /* ping++ */ = {

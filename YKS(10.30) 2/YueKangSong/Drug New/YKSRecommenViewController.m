@@ -99,8 +99,7 @@
             
         };
         [self.navigationController pushViewController:vc animated:YES];
-        
-        // [self.navigationController popToRootViewControllerAnimated:NO];
+
         return;
     }
     
@@ -252,13 +251,12 @@
 //返回分区
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2;
+    return 1;
 }
 //返回row项
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     //当记录变量index值 == 当前点击的分区值 表示展开状态
-//    if (self.index == section)
     NSString *str = [NSString stringWithFormat:@"%ld",section];
     if ([self.indexArray containsObject:str]){
         return self.datas.count;
@@ -304,7 +302,6 @@
         }
         cell.drugInfo = self.datas[indexPath.row];
         //单元格不可点击
-//        cell.userInteractionEnabled = NO;
         return cell;
     }else{
         //未点击按钮状态下返回的自定义cell
@@ -328,7 +325,6 @@
     releaseButtonView.clickButton.tag = section;
     //相等表示点击了
     NSString *str = [NSString stringWithFormat:@"%ld",section];
-    //if (self.index == section)
     if ([self.indexArray containsObject:str])
      {
         //显示覆盖在按钮上的向上视图
@@ -350,7 +346,6 @@
     //相等 表示点击了按钮
     NSString *str = [NSString stringWithFormat:@"%ld",section];
     if ([self.indexArray containsObject:str])
-    //if (self.index == section)
     {
         YKSOneBuyCell *buyView = [[YKSOneBuyCell alloc] initWithPrice:self.totalPrice andViewFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
         //返回视图
@@ -367,15 +362,6 @@
 //按钮点击的代理方法
 - (void)clickButton:(UIButton *)button
 {
-    //点击了
-//    if (button.tag == self.index) {
-//        //修改记录index值
-//        self.index = -1;
-//    }else
-//    {
-//        //未点击,让记录index与当前行相等
-//        self.index = button.tag;
-//    }
     
     NSString *str = [NSString stringWithFormat:@"%ld",button.tag];
     if ([self.indexArray containsObject:str]) {
@@ -389,10 +375,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *str = [NSString stringWithFormat:@"%ld",indexPath.section];
-    //if (self.index == indexPath.section)
     if ([self.indexArray containsObject:str])
     {
-        
         UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         YKSDrugDetailViewController *drugDetail = [mainStoryboard instantiateViewControllerWithIdentifier:@"YKSDrugDetailViewController"];
         drugDetail.drugInfo = self.datas[indexPath.row];
