@@ -33,7 +33,6 @@
 #import "YKSRotaryPopViewController.h"
 #import "YKSAdvertisementController.h"
 #import "YKSScrollView.h"
-
 @interface YKSHomeTableViewController () <ImagePlayerViewDelegate,UIAlertViewDelegate,YKSScrollViewDelegate>
 @property (strong, nonatomic) ImagePlayerView *imagePlayview;
 @property (assign, nonatomic) BOOL isShowAddressView;
@@ -134,27 +133,19 @@ if ([YKSUserModel isLogin]) {
     NSDictionary *dic=[YKSUserModel shareInstance].currentSelectAddress;
     
     if ( ! ([dic isEqualToDictionary:@{}] || (dic == nil) || ( dic == NULL) )){
-        
         [self setBtnTitleWithCurrentAddress];
     }
     else {
-        
         [self startSingleLocationRequest];
     }
 }
 else {
-    
     [self startSingleLocationRequest];
 }
-
-
 [self setAddressBtnFrame];
-
 }
-
 //请求药品类别列表数据
 -(void)requestDrugCategoryList{
-
     [GZBaseRequest drugCategoryListCallback:^(id responseObject, NSError *error) {
         if (error) {
             [self showToastMessage:@"网络加载失败"];
