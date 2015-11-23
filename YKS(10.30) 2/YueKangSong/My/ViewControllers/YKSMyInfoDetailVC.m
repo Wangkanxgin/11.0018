@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSDictionary *userInfo;
 @property (strong, nonatomic) UIPickerView *sexPickerView;
 @property (strong, nonatomic) UIPickerView *agePickserView;
-
 @end
 
 @implementation YKSMyInfoDetailVC
