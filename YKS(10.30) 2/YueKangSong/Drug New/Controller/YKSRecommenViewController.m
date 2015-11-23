@@ -20,12 +20,18 @@
 #import "YKSOneBuyCell.h"
 #import "YKSShoppingCartVC.h"
 #import "YKSDrugDetailViewController.h"
+#import "YKSSelectAddressView.h"
+#import "YKSMyAddressViewcontroller.h"
 
 @interface YKSRecommenViewController ()<YKSReleaseButtonCellDelegate,YKSOneBuyCellDelegate>
 
 //判断展开状态
 @property (nonatomic,strong) NSMutableArray *indexArray;
 @property (assign, nonatomic) CGFloat totalPrice;
+
+@property (assign, nonatomic) BOOL isCreat;
+
+@property (strong, nonatomic) NSDictionary *info;
 
 @end
 
@@ -46,6 +52,7 @@
 
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     //设置当前页面背景为白色
     self.view.backgroundColor = [UIColor whiteColor];
@@ -88,20 +95,37 @@
     if (!currentAddr[@"express_mobilephone"]) {
         //这里要默认点击那个地址button所以也要加记录
         //默认让点击这个地址列表
-        [UIViewController selectedAddressButtonArchiver:1];
-        self.tabBarController.selectedIndex = 0;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle:[NSBundle mainBundle]];
-        YKSAddressListViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"YKSAddressListViewController"];
-        vc.callback = ^(NSDictionary *info){
-            
-            [YKSUserModel shareInstance].currentSelectAddress = info;
-            
-        };
-        [self.navigationController pushViewController:vc animated:YES];
+//        [UIViewController selectedAddressButtonArchiver:1];
+//        self.tabBarController.selectedIndex = 0;
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+//                                                             bundle:[NSBundle mainBundle]];
+//        YKSAddressListViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"YKSAddressListViewController"];
+//        vc.callback = ^(NSDictionary *info){
+//            
+//            [YKSUserModel shareInstance].currentSelectAddress = info;
+//            
+//        };
+//        [self.navigationController pushViewController:vc animated:YES];
         
-        // [self.navigationController popToRootViewControllerAnimated:NO];
-        return;
+        
+        
+        //这里已经加载网络.拉倒当前地址了
+        NSDictionary *currentAddr = [UIViewController selectedAddressUnArchiver];
+        
+        //显示判断登陆没有,请登陆
+        if (![YKSUserModel isLogin]) {
+            [self showToastMessage:@"请登陆"];
+            [YKSTools login:self];
+            return;
+        }
+        
+        
+        //如果列表为空,什么地址都没有,去添加地址控制器
+        if (!currentAddr[@"express_mobilephone"]) {
+            [self showAddressView];
+            return;
+        }
+        
     }
     
     //不支持配送
@@ -392,6 +416,204 @@
     
     
 }
+
+
+//显示地址
+- (void)showAddressView {
+    
+    // 不允许
+    if (![YKSUserModel isLogin]) {
+        [YKSTools login:self];
+        return ;
+    }
+    __weak id bself = self;
+    YKSSelectAddressView *selectAddressView = nil;
+    
+    YKSMyAddressViewcontroller *myVC=[[YKSMyAddressViewcontroller alloc]init];
+    
+    myVC.hidesBottomBarWhenPushed=YES;
+    
+    [self.navigationController pushViewController:myVC animated:YES];
+    
+    selectAddressView = [YKSSelectAddressView showAddressViewToView:myVC.view
+                                                              datas:@[[self currentAddressInfo]]
+                                                           callback:^(NSDictionary *info, BOOL isCreate) {
+                                                               //新添
+                                                               self.info=info;
+                                                               
+                                                               self.isCreat=isCreate;
+                                                               
+                                                               [UIViewController selectedAddressArchiver:info];
+                                                               
+                                                               if (![[[YKSUserModel shareInstance]currentSelectAddress][@"id"]isEqualToString:info[@"id"]]) {
+                                                                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改地址？" message:@"确认修改地址将清空购物车" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                                                                   [alert show];
+                                                                   return ;
+                                                                   //                                                              [alert callBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                                   //                                                                  if (buttonIndex == 1) {
+                                                                   //
+                                                                   //                                                                  }
+                                                                   //                                                              }];
+                                                               }
+                                                               if (info) {
+                                                                   if (info[@"community_lat_lng"]) {
+                                                                       NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
+                                                                       [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
+                                                                       [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
+                                                                   }
+                                                                   if (![YKSUserModel shareInstance].currentSelectAddress) {
+                                                                       [YKSUserModel shareInstance].currentSelectAddress = info;
+                                                                   }
+                                                                   
+                                                               }
+                                                               if (isCreate) {
+                                                                   
+                                                                   
+                                                                   [bself gotoAddressVC:info];
+                                                               } else {
+                                                                   
+                                                                   [YKSUserModel shareInstance].currentSelectAddress = info;
+                                                                   //这里就是了,拿到地址,删除旧地址
+                                                                   
+                                                                   [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
+                                                                   
+                                                                   
+                                                                   
+                                                               }
+                                                           }];
+    //    [selectAddressView reloadData];
+    selectAddressView.removeViewCallBack = ^{
+        
+        
+    };
+    [GZBaseRequest addressListCallback:^(id responseObject, NSError *error) {
+        if (ServerSuccess(responseObject)) {
+            NSDictionary *dic = responseObject[@"data"];
+            if ([dic isKindOfClass:[NSDictionary class]] && dic[@"addresslist"]) {
+                selectAddressView.datas = [dic[@"addresslist"] mutableCopy];
+                [YKSUserModel shareInstance].addressLists = selectAddressView.datas;
+                if (!selectAddressView.datas) {
+                    selectAddressView.datas = [NSMutableArray array];
+                }
+                
+                [selectAddressView.datas insertObject:[self currentAddressInfo] atIndex:0];
+                [selectAddressView reloadData];
+            }
+        }
+    }];
+    
+}
+
+
+- (NSDictionary *)currentAddressInfo {
+    
+    NSDictionary *dic=[UIViewController selectedMyLocation];
+    
+    NSString *district = dic[@"addressComponent"][@"district"];
+    NSString *street = dic[@"addressComponent"][@"street"];
+    NSString *street_number = dic[@"addressComponent"][@"street_number"];
+    NSString *formatted_address = dic[@"formatted_address"];
+    
+    
+    NSString  *a=(NSString *)dic[@"sendable"];
+    if (IS_EMPTY_STRING(a)) {
+        return @{@"province": @"11",
+                 @"district": district ? district : @"",
+                 @"street":  street ? street : @"",
+                 @"street_number":  street_number ? street_number : @"",
+                 @"express_username": @"我的位置",
+                 @"express_mobilephone": @"",
+                 @"express_detail_address":  formatted_address? formatted_address : @""
+                 };
+    }
+    
+    return @{@"province": @"11",
+             @"district": district ? district : @"",
+             @"street":  street ? street : @"",
+             @"street_number":  street_number ? street_number : @"",
+             @"express_username": @"我的位置",
+             @"express_mobilephone": @"",
+             @"express_detail_address":  formatted_address? formatted_address : @"",
+             @"sendable":a
+             };
+}
+
+
+- (void)gotoAddressVC:(NSDictionary *)addressInfo {
+    
+    if (![YKSUserModel isLogin]) {
+        [YKSTools login:self];
+        return;
+    }
+    
+    UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    YKSAddAddressVC *vc = [mainBoard instantiateViewControllerWithIdentifier:@"YKSAddAddressVC"];
+    vc.addressInfo = [addressInfo mutableCopy];
+    vc.isCurrentLocation = YES;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        __weak id bself = self;
+        YKSSelectAddressView *selectAddressView = nil;
+        {
+            //新添
+            NSDictionary *info = self.info;
+            BOOL isCreate = self.isCreat;
+            
+            
+            if (info) {
+                if (info[@"community_lat_lng"]) {
+                    NSArray *array = [info[@"community_lat_lng"] componentsSeparatedByString:@","];
+                    [YKSUserModel shareInstance].lat = [[array firstObject] floatValue];
+                    [YKSUserModel shareInstance].lng = [[array lastObject] floatValue];
+                }
+                
+                
+            }
+            if (isCreate) {
+                [bself gotoAddressVC:[UIViewController selectedMyLocation]];
+                
+                return;
+            } else {
+                
+                
+                
+                [YKSUserModel shareInstance].currentSelectAddress = info;
+                //这里就是了,拿到地址,删除旧地址
+                
+                [UIViewController deleteFile];           [UIViewController selectedAddressArchiver:info];
+            }
+        };
+        //    [selectAddressView reloadData];
+        selectAddressView.removeViewCallBack = ^{
+            
+        };
+        [GZBaseRequest addressListCallback:^(id responseObject, NSError *error) {
+            if (ServerSuccess(responseObject)) {
+                NSDictionary *dic = responseObject[@"data"];
+                if ([dic isKindOfClass:[NSDictionary class]] && dic[@"addresslist"]) {
+                    selectAddressView.datas = [dic[@"addresslist"] mutableCopy];
+                    [YKSUserModel shareInstance].addressLists = selectAddressView.datas;
+                    if (!selectAddressView.datas) {
+                        selectAddressView.datas = [NSMutableArray array];
+                    }
+                    [selectAddressView.datas insertObject:[self currentAddressInfo] atIndex:0];
+                    [selectAddressView reloadData];
+                }
+            }
+        }];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
+    
+    
+    
+}
+
 
 
 @end
