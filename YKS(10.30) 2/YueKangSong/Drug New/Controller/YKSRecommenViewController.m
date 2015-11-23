@@ -93,22 +93,7 @@
     
     //如果列表为空,什么地址都没有,去添加地址控制器
     if (!currentAddr[@"express_mobilephone"]) {
-        //这里要默认点击那个地址button所以也要加记录
-        //默认让点击这个地址列表
-//        [UIViewController selectedAddressButtonArchiver:1];
-//        self.tabBarController.selectedIndex = 0;
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                             bundle:[NSBundle mainBundle]];
-//        YKSAddressListViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"YKSAddressListViewController"];
-//        vc.callback = ^(NSDictionary *info){
-//            
-//            [YKSUserModel shareInstance].currentSelectAddress = info;
-//            
-//        };
-//        [self.navigationController pushViewController:vc animated:YES];
-        
-        
-        
+
         //这里已经加载网络.拉倒当前地址了
         NSDictionary *currentAddr = [UIViewController selectedAddressUnArchiver];
         
@@ -276,7 +261,7 @@
 //返回分区
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2;
+    return 1;
 }
 //返回row项
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

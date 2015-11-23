@@ -39,12 +39,15 @@
     [super viewDidLoad];
     self.title = @"悦康送";
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
-    //地址有中文.
-    //NSURL *imageURL = [NSURL URLWithString:[_dictionary[@"actiontarget"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+    UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH / 320 * self.view.frame.size.height)];
     [image sd_setImageWithURL:_dictionary[@"actiontarget"] placeholderImage:[UIImage imageNamed:@"defatul320"]];
-    [self.view addSubview:image];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    scrollView.contentSize = CGSizeMake(0, image.frame.size.height);
+    scrollView.bounces = NO;
+    scrollView.pagingEnabled = YES;
+    scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:scrollView];
+    [scrollView addSubview:image];
 }
 
 @end
