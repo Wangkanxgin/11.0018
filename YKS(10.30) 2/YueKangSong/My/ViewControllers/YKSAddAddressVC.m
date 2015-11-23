@@ -221,6 +221,9 @@
     
     
     [self.view endEditing:YES];
+    
+    NSString *name=[YKSTools nameFormatter:_nameField.text];
+    _nameField.text=name;
     if (IS_EMPTY_STRING(_nameField.text)) {
         [self showToastMessage:@"请填写收货人"];
         return ;
@@ -245,6 +248,9 @@
         [self showToastMessage:@"请填写写字楼，小区，学校等地址"];
         return;
     }
+    
+    NSString *detail=[YKSTools nameFormatter:_detailAddressField.text];
+    _detailAddressField.text=detail;
     if (IS_EMPTY_STRING(_detailAddressField.text)) {
         [self showToastMessage:@"请填写详细地址"];
         return;

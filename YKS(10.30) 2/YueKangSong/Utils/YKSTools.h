@@ -28,6 +28,8 @@
 + (NSAttributedString *)priceString:(CGFloat)price;
 + (NSAttributedString *)priceString:(CGFloat)price smallSize:(CGFloat)smallSize largeSize:(CGFloat)largeSize;
 
++(NSString *)nameFormatter:(NSString *)name;
+
 + (void)login:(UIViewController *)parentViewController;
 
 + (void)call:(NSString *)telephone inView:(UIView *)view;

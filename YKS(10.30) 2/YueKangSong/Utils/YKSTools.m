@@ -45,6 +45,19 @@
     return YES;
 }
 
++(NSString *)nameFormatter:(NSString *)name
+{
+    
+    NSString *nameRegex = @"[^\u4e00-\u9fa5a-zA-Z]";
+    
+    NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:
+                                              
+                                              nameRegex options:0 error:nil];
+    name  = [regularExpression stringByReplacingMatchesInString:name options:0 range:NSMakeRange(0, name.length) withTemplate:@""];
+    
+    return name;
+}
+
 + (NSString *)formatterDateStamp:(NSInteger)timestamp {
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:timestamp];
     NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];

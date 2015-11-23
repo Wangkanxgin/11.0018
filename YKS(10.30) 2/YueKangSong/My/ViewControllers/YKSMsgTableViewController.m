@@ -5,19 +5,14 @@
 //  Created by gongliang on 15/6/1.
 //  Copyright (c) 2015年 YKS. All rights reserved.
 //
-
 #import "YKSMsgTableViewController.h"
 #import "GZBaseRequest.h"
 #import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
-
 @interface YKSMsgTableViewController ()
-
 @property (nonatomic, strong) NSMutableArray *datas;
-
 @end
 
 @implementation YKSMsgTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [GZBaseRequest msgListByPage:1
@@ -45,7 +40,6 @@
     // Return the number of rows in the section.
     return _datas.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *dic = _datas[indexPath.row];
