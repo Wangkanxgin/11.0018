@@ -267,7 +267,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     //当记录变量index值 == 当前点击的分区值 表示展开状态
-//    if (self.index == section)
     NSString *str = [NSString stringWithFormat:@"%ld",section];
     if ([self.indexArray containsObject:str]){
         return self.datas.count;

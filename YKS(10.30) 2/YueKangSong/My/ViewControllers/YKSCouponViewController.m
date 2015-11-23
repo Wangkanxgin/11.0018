@@ -48,6 +48,10 @@
     return _appearDatas;
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 -(UIView *)headersegment{
     DZNSegmentedControl *d = [[DZNSegmentedControl alloc]initWithItems:@[@"未使用",@"已使用",@"已过期"]];
