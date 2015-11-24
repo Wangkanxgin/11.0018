@@ -11,7 +11,7 @@
 #import "YKSSelectAddressListCell.h"
 #import "YKSMyAddressViewcontroller.h"
 
-@interface YKSSelectAddressView() <UIGestureRecognizerDelegate>
+@interface YKSSelectAddressView() <UIGestureRecognizerDelegate,relodData>
 
 {
     BOOL flag;
@@ -25,10 +25,12 @@
 
 @implementation YKSSelectAddressView
 
+-(void)reloadData{
+
+    [self.tableView reloadData];
+}
 - (void)awakeFromNib {
-    
     flag=YES;
-    
     self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     self.frame = CGRectMake(0, 84, SCREEN_WIDTH, SCRENN_HEIGHT-84-44);
     [self.createButton setTitleColor:kNavigationBar_back_color forState:UIControlStateNormal];
@@ -45,7 +47,6 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
     if ([touch.view isDescendantOfView:self.tableView]) {
         return NO;
     }
@@ -65,6 +66,7 @@
     YKSSelectAddressView *addressView = [[[NSBundle mainBundle] loadNibNamed:@"YKSSelectAddressView"
                                                                        owner:self
                                                                      options:nil] firstObject];
+    
     [view addSubview:addressView];
     addressView.callback = callback;
     addressView.datas = [datas mutableCopy];
@@ -76,7 +78,7 @@
 }
 
 
-- (void)reloadData {
+- (void)reloadData2 {
 //    _subAddressViewHeight.constant += 60 * (_datas.count - 1);
 //    
 //    if (_datas.count>7) {
@@ -160,7 +162,7 @@
 
     flag=!flag;
     
-    [self reloadData];
+    [self reloadData2];
 }
 
 

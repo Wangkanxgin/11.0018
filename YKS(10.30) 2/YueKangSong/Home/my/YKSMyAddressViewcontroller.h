@@ -8,11 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol relodData <NSObject>
+
+@required
+
+-(void)reloadData;
+
+@end
+
 @interface YKSMyAddressViewcontroller : UIViewController
 
 @property(nonatomic,copy)NSDictionary *currentAddressInfo;
 
 @property (strong, nonatomic) NSDictionary *info;
 @property (assign, nonatomic) BOOL isCreat;
+
+@property(nonatomic,copy) id delegate;
 
 @end
