@@ -10,6 +10,7 @@
 #import "GZBaseRequest.h"
 #import "YKSTools.h"
 #import "YKSUserModel.h"
+
 //#import "UIAlertView+Block.h"
 @interface YKSLoginViewController ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
@@ -17,20 +18,89 @@
 @property (weak, nonatomic) IBOutlet UIButton *codeButton;
 @property (strong, nonatomic) NSTimer *timer;
 @property (assign, nonatomic) NSInteger time;
+@property (weak, nonatomic) IBOutlet UIView *BackgroundView;
+@property (weak, nonatomic) IBOutlet UIButton *UserProtocol;
 
+
+@property(nonatomic,strong)UIView *viewInvitation;
+@property(nonatomic,strong)UILabel *label;
+@property (nonatomic,strong) UITextField *textField;
+@property (nonatomic,strong) UIButton *removerButton;
+@property (nonatomic,assign) CGRect rect;
 @end
 
 @implementation YKSLoginViewController
 
+- (UIView *)viewInvitation
+{
+    if (!_viewInvitation) {
+        _viewInvitation = [[UIView alloc] initWithFrame:self.rect];
+        _viewInvitation.backgroundColor = [UIColor whiteColor];
+    }
+    return _viewInvitation;
+}
+- (UILabel *)label
+{
+    if (!_label) {
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 20)];
+        _label.text = @"邀请码:";
+    }
+    return _label;
+}
+- (UITextField *)textField
+{
+    if (!_textField) {
+        _textField = [[UITextField alloc] initWithFrame:CGRectMake(70, 5, SCREEN_WIDTH - 100, 20)];
+        _textField.placeholder = @"请输入邀请码";
+    }
+    return _textField;
+}
+- (UIButton *)removerButton
+{
+    if (!_removerButton) {
+        _removerButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _removerButton.frame = CGRectMake(SCREEN_WIDTH - 30, 5, 20, 20);
+        _removerButton.backgroundColor = [UIColor redColor];
+        [_removerButton addTarget:self action:@selector(remover) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _removerButton;
+}
 - (void)viewDidLoad {
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.phoneTextField becomeFirstResponder];
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入邀请码" message:@"您是第一次登陆，请输入邀请码" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-//    [alert show];
+    CGFloat labelY = 45 + self.codeButton.frame.size.height + self.BackgroundView.frame.size.height + self.UserProtocol.frame.size.height;
 
+    NSLog(@"Y----------------%f",labelY);
+    UIButton *invitationCode = [UIButton buttonWithType:UIButtonTypeSystem];
+    invitationCode.frame = CGRectMake(0, labelY, 100, 30);
+    [invitationCode setTitle:@"点击输入邀请码" forState:UIControlStateNormal];
+    invitationCode.titleLabel.font = [UIFont systemFontOfSize:12];
+    invitationCode.titleLabel.textColor = [UIColor blueColor];
+    [invitationCode addTarget:self action:@selector(addInvitation:) forControlEvents:UIControlEventTouchUpInside];
+    invitationCode.tag = 0;
+    [self.view addSubview:invitationCode];
 }
+
+- (void)addInvitation:(UIButton *)sender
+{
+    NSLog(@"....");
+    self.rect = CGRectMake(0, sender.frame.size.height + sender.frame.origin.y, SCREEN_WIDTH, 30);
+    [self.viewInvitation addSubview:self.textField];
+    [self.viewInvitation addSubview:self.label];
+    [self.viewInvitation addSubview:self.removerButton];
+    [self.view addSubview:self.viewInvitation];
+}
+- (void)remover
+{
+    NSLog(@"...");
+    [self.label removeFromSuperview];
+    [self.textField removeFromSuperview];
+    [self.removerButton removeFromSuperview];
+    [self.viewInvitation removeFromSuperview];
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

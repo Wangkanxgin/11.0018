@@ -63,7 +63,7 @@
     
     [bottomView addSubview:managerBtn];
     
-
+    
     
     UIButton *newBtn=[UIButton buttonWithType:UIButtonTypeRoundedRect];
     
@@ -97,8 +97,6 @@
     vc.flag=@"1";
     
     [self.navigationController pushViewController:vc animated:YES];
-
-    
 
 }
 

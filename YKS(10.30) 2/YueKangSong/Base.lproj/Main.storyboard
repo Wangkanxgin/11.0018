@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="9Jj-IU-uLG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="9Jj-IU-uLG">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -2178,31 +2178,6 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pT0-cb-WJI">
                                 <rect key="frame" x="20" y="122" width="289" height="30"/>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CiX-Kd-kuB" customClass="YKSBottomLineView">
-                                <rect key="frame" x="0.0" y="269" width="320" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="手机号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAn-xd-esk">
-                                        <rect key="frame" x="19" y="14" width="51" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="填写11位手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Um-5P-wAv">
-                                        <rect key="frame" x="94" y="17" width="218" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="FAn-xd-esk" firstAttribute="leading" secondItem="CiX-Kd-kuB" secondAttribute="leading" constant="19" id="Ci9-v2-HKx"/>
-                                    <constraint firstItem="2Um-5P-wAv" firstAttribute="leading" secondItem="FAn-xd-esk" secondAttribute="trailing" constant="24" id="TZh-44-a2H"/>
-                                    <constraint firstAttribute="height" constant="50" id="Z0a-Ia-UfY"/>
-                                    <constraint firstAttribute="trailing" secondItem="2Um-5P-wAv" secondAttribute="trailing" constant="8" id="krm-Sl-eqZ"/>
-                                    <constraint firstItem="2Um-5P-wAv" firstAttribute="centerY" secondItem="FAn-xd-esk" secondAttribute="centerY" constant="0.5" id="uce-zC-41R"/>
-                                    <constraint firstAttribute="centerY" secondItem="FAn-xd-esk" secondAttribute="centerY" constant="0.5" id="ywL-y2-c0H"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2219,6 +2194,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="快速登录" id="VNj-Ja-d75"/>
                     <connections>
+                        <outlet property="BackgroundView" destination="Trl-Ym-jRD" id="rIO-t7-Pcl"/>
+                        <outlet property="UserProtocol" destination="11R-Sd-x3m" id="Er3-vm-3Zg"/>
                         <outlet property="codeButton" destination="0I7-KG-kJX" id="1Sj-yQ-niX"/>
                         <outlet property="codeTextField" destination="weZ-hc-imY" id="bQb-wD-zGY"/>
                         <outlet property="phoneTextField" destination="GN4-CP-hCJ" id="013-ye-RAq"/>
