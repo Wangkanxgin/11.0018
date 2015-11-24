@@ -9,9 +9,7 @@
 #import "YKSTools.h"
 #import "YKSAppDelegate.h"
 #import "GZBaseRequest.h"
-
 NSString * const kUserInfo = @"userInfo";
-
 @interface YKSUserModel()
 
 @property (nonatomic, strong) NSDictionary *userInfo;
@@ -28,9 +26,7 @@ NSString * const kUserInfo = @"userInfo";
 
 @property (nonatomic, strong, readwrite) NSString *telePhone;
 
-
 @end
-
 @implementation YKSUserModel
 
 @synthesize userInfo = _userInfo;
@@ -183,9 +179,7 @@ NSString * const kUserInfo = @"userInfo";
         }];
     }
     _currentSelectAddress=nil;
-    
 }
-
 
 //设置当前选中地址
 - (void)setCurrentSelectAddress:(NSDictionary *)currentSelectAddress {
@@ -264,7 +258,6 @@ NSString * const kUserInfo = @"userInfo";
     [YKSUserModel shareInstance].userEmail = nil;
     [YKSUserModel shareInstance].password = nil;
     [YKSUserModel shareInstance].headImageString = nil;
-//    [YKSUserModel shareInstance].currentSelectAddress = nil;
 }
 
 + (void)logout {
@@ -273,15 +266,5 @@ NSString * const kUserInfo = @"userInfo";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:kUserInfo];
     [userDefaults synchronize];
-    
-//    NSFileManager *fileMgr = [NSFileManager defaultManager];
-//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];
-////    NSString *fullPath = [path stringByAppendingString:@"selectedAddress"];
-////    NSLog(@"%@",NSHomeDirectory());
-//    [fileMgr removeItemAtPath:path error:nil];
-
-    
-    
 }
-
 @end

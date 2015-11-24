@@ -68,28 +68,24 @@
     
     if (indexPath.section == 0) {
         [self performSegueWithIdentifier:@"gotoYKSMyInfoDetailVC" sender:nil];
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 2) {
         switch (indexPath.row) {
             case 0: {
-                [self performSegueWithIdentifier:@"gotoOrderVC" sender:nil];
-            }
-                break;
-            case 1: {
                 [self performSegueWithIdentifier:@"gotoCollectVC" sender:nil];
             }
                 break;
-            case 2: {
+            case 1: {
                 [self performSegueWithIdentifier:@"gotoCouponVC" sender:nil];
             }
                 break;
-            case 3: {
+            case 2: {
                 [self performSegueWithIdentifier:@"gotoAddressVC" sender:nil];
             }
                 break;
             default:
                 break;
         }
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         [self performSegueWithIdentifier:@"yaoqingma" sender:nil];
     }
     else if (indexPath.section == 3) {
