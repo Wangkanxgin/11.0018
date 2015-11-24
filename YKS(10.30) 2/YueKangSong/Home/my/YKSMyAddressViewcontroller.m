@@ -33,6 +33,15 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+    [self.delegate reloadData];
+    
+    self.navigationController.navigationBar.hidden=YES;
+    
+  
+}
+
 -(void)viewDidAppear:(BOOL)animated{
     [self createBottomBtn];
 }
@@ -111,13 +120,7 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
 
-    self.navigationController.navigationBar.hidden=YES;
-    
-    
-
-}
 
 -(void)viewWillDisappear:(BOOL)animated{
 

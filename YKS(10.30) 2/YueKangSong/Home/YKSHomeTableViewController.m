@@ -413,6 +413,8 @@ else {
     
     [self.navigationController pushViewController:myVC animated:YES];
     
+    myVC.delegate=selectAddressView;
+    
     selectAddressView = [YKSSelectAddressView showAddressViewToView:myVC.view
                                                               datas:@[[self currentAddressInfo]]
                                                            callback:^(NSDictionary *info, BOOL isCreate) {

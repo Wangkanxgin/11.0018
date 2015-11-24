@@ -3216,7 +3216,7 @@
                         <viewControllerLayoutGuide type="bottom" id="qgk-0C-Zoq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="z7p-Kn-D3j">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="Inf-L8-yQX">
@@ -3462,7 +3462,7 @@
                                     <outlet property="delegate" destination="JiP-VA-LWw" id="xiv-dX-G8k"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKT-9y-eYs" customClass="YKSTopLineView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKT-9y-eYs" customClass="YKSTopLineView">
                                 <rect key="frame" x="0.0" y="474" width="320" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kgn-HF-Ox7">
@@ -4152,10 +4152,10 @@
                         <viewControllerLayoutGuide type="bottom" id="t5v-hR-jnv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8JW-wB-Kdm">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERC-kr-Apx" customClass="YKSTopLineView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ERC-kr-Apx" customClass="YKSTopLineView">
                                 <rect key="frame" x="0.0" y="405" width="320" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3f-lC-S4l">
@@ -4245,7 +4245,7 @@
                                     <constraint firstAttribute="centerY" secondItem="n3f-lC-S4l" secondAttribute="centerY" id="zfA-qv-nEQ"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ObP-vx-KN6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ObP-vx-KN6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="405"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -5260,12 +5260,12 @@
         <image name="间接邀请.png" width="139" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Ie-13-liQ"/>
+        <segue reference="3mk-1C-4Cj"/>
+        <segue reference="yPI-Be-LDN"/>
         <segue reference="jy8-um-db3"/>
         <segue reference="X8J-kY-NHO"/>
-        <segue reference="yPI-Be-LDN"/>
         <segue reference="ZiF-fl-Tes"/>
-        <segue reference="3mk-1C-4Cj"/>
         <segue reference="ZBU-eq-TkH"/>
+        <segue reference="8Xj-f4-WUK"/>
     </inferredMetricsTieBreakers>
 </document>
