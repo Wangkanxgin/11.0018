@@ -26,7 +26,7 @@
 @property(nonatomic,strong)UILabel *label;
 @property (nonatomic,strong) UITextField *textField;
 @property (nonatomic,strong) UIButton *removerButton;
-@property (nonatomic,assign) CGRect rect;
+
 @end
 
 @implementation YKSLoginViewController
@@ -34,7 +34,7 @@
 - (UIView *)viewInvitation
 {
     if (!_viewInvitation) {
-        _viewInvitation = [[UIView alloc] initWithFrame:self.rect];
+        _viewInvitation = [[UIView alloc] init];
         _viewInvitation.backgroundColor = [UIColor whiteColor];
     }
     return _viewInvitation;
@@ -42,7 +42,7 @@
 - (UILabel *)label
 {
     if (!_label) {
-        _label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 20)];
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 80, 30)];
         _label.text = @"邀请码:";
     }
     return _label;
@@ -50,8 +50,9 @@
 - (UITextField *)textField
 {
     if (!_textField) {
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(70, 5, SCREEN_WIDTH - 100, 20)];
+        _textField = [[UITextField alloc] initWithFrame:CGRectMake(70, 11, SCREEN_WIDTH - 100, 30)];
         _textField.placeholder = @"请输入邀请码";
+        _textField.font = [UIFont systemFontOfSize:14];
     }
     return _textField;
 }
@@ -59,8 +60,10 @@
 {
     if (!_removerButton) {
         _removerButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        _removerButton.frame = CGRectMake(SCREEN_WIDTH - 30, 5, 20, 20);
-        _removerButton.backgroundColor = [UIColor redColor];
+        _removerButton.frame = CGRectMake(SCREEN_WIDTH - 30, 10, 25, 25);
+        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cancel_code"]];
+        image.frame = CGRectMake(0, 5, 20, 20);
+        [_removerButton addSubview:image];
         [_removerButton addTarget:self action:@selector(remover) forControlEvents:UIControlEventTouchUpInside];
     }
     return _removerButton;
@@ -85,8 +88,7 @@
 
 - (void)addInvitation:(UIButton *)sender
 {
-    NSLog(@"....");
-    self.rect = CGRectMake(0, sender.frame.size.height + sender.frame.origin.y, SCREEN_WIDTH, 30);
+    self.viewInvitation.frame = CGRectMake(0, sender.frame.size.height + sender.frame.origin.y, SCREEN_WIDTH, 50);
     [self.viewInvitation addSubview:self.textField];
     [self.viewInvitation addSubview:self.label];
     [self.viewInvitation addSubview:self.removerButton];
@@ -94,7 +96,6 @@
 }
 - (void)remover
 {
-    NSLog(@"...");
     [self.label removeFromSuperview];
     [self.textField removeFromSuperview];
     [self.removerButton removeFromSuperview];
@@ -181,10 +182,13 @@
     sender.enabled = NO;
 
     [self showProgress];
+#warning 发送账号密码请求
     [GZBaseRequest loginByMobilephone:_phoneTextField.text
                              password:_codeTextField.text
                              callback:^(id responseObject, NSError *error) {
+                                 
                                  [self hideProgress];
+                                 
                                  if (error) {
                                      [self showToastMessage:@"网络加载失败"];
                                      sender.enabled = YES;
@@ -227,6 +231,10 @@
     }
     [self.navigationController popViewControllerAnimated:YES];
 
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view resignFirstResponder];
 }
 /*
 #pragma mark - Navigation
