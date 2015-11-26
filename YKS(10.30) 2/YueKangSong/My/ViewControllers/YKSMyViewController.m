@@ -120,7 +120,7 @@
             }
                 break;
             case 2: {
-                [self performSegueWithIdentifier:@" " sender:nil];
+                [self performSegueWithIdentifier:@" gotoCouponVC" sender:nil];
             }
                 break;
             case 3: {
