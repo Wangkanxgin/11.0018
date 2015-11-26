@@ -13,5 +13,11 @@
 @property (nonatomic, strong) NSArray *drugs;
 
 @property (nonatomic, assign) CGFloat totalPrice;
+//传给ping的支付类型
+@property(nonatomic,retain)NSString *channel;
+
+-(void)showAlertWait;
+-(void)showAlertMessage:(NSString *)msg;
+-(void)hideAlert;
 
 @end

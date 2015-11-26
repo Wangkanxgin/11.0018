@@ -17,6 +17,17 @@
 #import "YKSCouponViewController.h"
 #import "YKSUserModel.h"
 #import "YKSAddressListViewController.h"
+#import "Pingpp.h"
+
+
+#define kWaiting          @"正在获取支付凭据,请稍后..."
+#define kNote             @"提示"
+#define kConfirm          @"确定"
+#define kErrorNet         @"网络错误"
+#define kResult           @"支付结果：%@"
+
+#define KUrlScheme @"demoapp001"  //  这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
 
 @interface YKSShoppingCartBuyVC ()
 <UITableViewDataSource,
@@ -177,14 +188,20 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         
         NSLog(@"---- aaaa ------%@",dic);
     }];
-    
+
+    if ([self.channel isEqualToString: @"wx"]) {
+        
+        NSDictionary *dict =@{@"channel" : self.channel};
+        YKSShoppingCartBuyVC *__weak weakSelf = self;
+        //[self showAlertWait];
+        
     //提交信息,这里会清空这个购物车的
     [GZBaseRequest submitOrderContrast:gcontrast
                               couponid:_couponInfo ? _couponInfo[@"id"] : nil
                              addressId:_addressInfos[@"id"]
                                 images:_uploadImages
-                                charge:@{}
-                              pay_type:@"1"
+                                charge:dict
+                              pay_type:@"2"
      
                               callback:^(id responseObject, NSError *error) {
                                   [self hideProgress];
@@ -201,29 +218,113 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 //                                                                 callback:^(id responseObject, NSError *error) {
 //                                                                 }];
 
-if (ServerSuccess(responseObject))
- {
-    NSArray *gids = [gcontrast valueForKeyPath:@"gid"];
-    //购物车清空
-    [GZBaseRequest deleteShoppingCartBygids:[gids componentsJoinedByString:@","]
-    callback:^(id responseObject, NSError *error) {
-    }];
-   //继续处理订单,这都显示订单处理完成,确定,都回调到主页了
-    NSLog(@"订单处理中 %@", responseObject);
-    [YKSOrderConfirmView showOrderToView:self.view.window orderId:responseObject[@"data"][@"orderid"] callback:^{
-        self.tabBarController.selectedIndex = 0;
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-}
- 
- else  {
-              [self showToastMessage:responseObject[@"msg"]];
-        
-       }
-    }];
+                                  if (ServerSuccess(responseObject)){
+                                      [self showToastMessage:kWaiting];
+                                      NSString * charge1 = responseObject[@"data"][@"charge"];
+                                      NSData *data=[NSJSONSerialization dataWithJSONObject:charge1 options:0 error:nil];
+                                      NSString *charge=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [Pingpp createPayment:charge  viewController:weakSelf appURLScheme:KUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                                              
+                                              NSLog(@"completion block: %@",result);
+                                              if ([result isEqualToString:@"success"])//error == nil)
+                                              {
+                                                  
+                                                  // NSLog(@"PingppEdrror is  nil");
+                                                  
+                                                  [YKSOrderConfirmView showOrderToView:self.view.window orderId:responseObject[@"data"][@"orderid"] callback:^{
+                                                      
+                                                      [self dismissViewControllerAnimated:NO completion:nil];
+                                                      if (self.navigationController.presentingViewController) {
+                                                          if ([self.navigationController.presentingViewController isKindOfClass:[UITabBarController class]]) {
+                                                              [(UITabBarController *)self.navigationController.presentingViewController setSelectedIndex:0];
+                                                          }
+                                                          [self.navigationController dismissViewControllerAnimated:NO completion:^{
+                                                          }];
+                                                      } else {
+                                                          self.tabBarController.selectedIndex = 0;
+                                                          [self.navigationController popToRootViewControllerAnimated:NO];
+                                                      }
+                                                  }];
+                                              }
+                                              else
+                                              {
+                                                  
+                                                  [weakSelf showAlertMessage:result];
+                                                  NSLog(@"PingppError : code =%lu msg=%@",(unsigned long)error.code,[error getMsg]);
+                                              }
+                                          }];
+                                      });
+                                  }else
+                                  {
+                                      [self showToastMessage:responseObject[@"msg"]];
+                                  }
+                              }];
+        return ;
+    }
+
+    [self showProgress];
+    //提交信息,这里会清空这个购物车的
+     NSDictionary *dict=@{@"channel":@""};
+    [GZBaseRequest submitOrderContrast:gcontrast
+                              couponid:_couponInfo ? _couponInfo[@"id"] : nil
+                             addressId:_addressInfos[@"id"]
+                                images:_uploadImages
+                                charge:dict
+                              pay_type:@"1"
+     
+                              callback:^(id responseObject, NSError *error) {
+                                  [self hideProgress];
+                                  if (error) {
+                                      [self showToastMessage:@"网络加载失败"];
+                                      return ;
+                                  }
+                                  
+                                  
+                                  
+                                  
+                                  if (ServerSuccess(responseObject))
+                                  {
+                                      NSArray *gids = [gcontrast valueForKeyPath:@"gid"];
+                                      //购物车清空
+                                      [GZBaseRequest deleteShoppingCartBygids:[gids componentsJoinedByString:@","]
+                                                                     callback:^(id responseObject, NSError *error) {
+                                                                     }];
+                                      //继续处理订单,这都显示订单处理完成,确定,都回调到主页了
+                                      NSLog(@"订单处理中 %@", responseObject);
+                                      [YKSOrderConfirmView showOrderToView:self.view.window orderId:responseObject[@"data"][@"orderid"] callback:^{
+                                          self.tabBarController.selectedIndex = 0;
+                                          [self.navigationController popToRootViewControllerAnimated:NO];
+                                      }];
+                                  }
+                                  
+                                  else  {
+                                      [self showToastMessage:responseObject[@"msg"]];
+                                      
+                                  }
+                              }];
 }
 
-#pragma mark - UIActionSheetDelegate        
+- (void)showAlertMessage:(NSString*)msg
+{
+    if ([msg isEqualToString:@"cancel"]) {
+        msg=@"您已取消支付";
+    }
+    if ([msg isEqualToString:@"fail"]) {
+        msg=@"支付失败";
+    }
+    if ([msg isEqualToString:@"success"]) {
+        msg=@"支付成功";
+    }
+    
+    UIAlertView *mAlert = [[UIAlertView alloc] initWithTitle:kNote message:msg delegate:nil cancelButtonTitle:kConfirm otherButtonTitles:nil, nil];
+    [mAlert show];
+}
+
+
+
+
+#pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -513,7 +614,49 @@ if (ServerSuccess(responseObject))
         }
         [self performSegueWithIdentifier:@"gotoYKSAddressListViewController" sender:nil];
     }
+    if(_isPrescription)
+    {
+        if (indexPath.section == 4)
+        {
+            if (indexPath.row == 2)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateSelected];
+                self.channel=@"wx";
+            }
+            else if (indexPath.row == 1)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateSelected];
+                self.channel=@"hd";
+            }
+        }
+    }
+#warning TODO...
+    if (!(_isPrescription))
+    {
+        if (indexPath.section == 3)
+        {
+            
+            if (indexPath.row == 2)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                self.channel=@"wx";
+            }
+            
+            else if (indexPath.row == 1)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                self.channel = @"hd";
+            }
+        }
+    }
+    
 }
+
+
 
 #pragma mark - Navigation
 
