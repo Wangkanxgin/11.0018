@@ -89,7 +89,7 @@
 
 - (void)addInvitation:(UIButton *)sender
 {
-    self.viewInvitation.frame = CGRectMake(0, sender.frame.size.height + sender.frame.origin.y, SCREEN_WIDTH, 50);
+    self.viewInvitation.frame = CGRectMake(0, sender.frame.origin.y + 5, SCREEN_WIDTH, 45);
     [self.viewInvitation addSubview:self.textField];
     [self.viewInvitation addSubview:self.label];
     [self.viewInvitation addSubview:self.removerButton];
@@ -184,7 +184,6 @@
     sender.enabled = NO;
 
     [self showProgress];
-#warning 发送账号密码请求
     
     [GZBaseRequest loginByMobilephone:_phoneTextField.text
                              password:_codeTextField.text
