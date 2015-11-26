@@ -399,9 +399,10 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 90.0f;
+        return 115.0f;
     } else if (indexPath.row == 1) {
         return [tableView fd_heightForCellWithIdentifier:@"drugActionCell" configuration:^(YKSDrugActionCell *actionCell) {
+            
             actionCell.actionLabel.text = _drugInfo[@"gdec"];
         }];
     } else if (indexPath.row == 2) {
@@ -427,7 +428,14 @@
         YKSDrugNameCell *nameCell = [tableView dequeueReusableCellWithIdentifier:@"drugNameCell" forIndexPath:indexPath];
         nameCell.nameLabel.text = DefuseNUllString(_drugInfo[@"gtitle"]);
 //        NSString *priceString = [NSString stringWithFormat:@"￥%0.2f /盒", [_drugInfo[@"gprice"] floatValue]];
-
+       
+//        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(50,10, 200, 50)];
+//        label.text=@"温馨提示：悦康送所售部分商品包装更换频繁，如货品与图片不完全一致，请以收到的商品实物为准。";
+//        label.numberOfLines=0;
+//        label.backgroundColor=[UIColor redColor];
+//        [nameCell.contentView addSubview:label];
+//        
+        
         NSString *priceString = [NSString stringWithFormat:@"￥%0.2f  ", [_drugInfo[@"gprice"] floatValue]];
         
         NSMutableAttributedString *attribuedString = [[NSMutableAttributedString alloc] initWithString:priceString];

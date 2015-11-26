@@ -33,6 +33,7 @@
 /************************* 登录 *************************/
 + (NSURLSessionDataTask *)loginByMobilephone:(NSString *)phone
                                     password:(NSString *)password
+                                  invitecode:(NSString *)invitecode
                                     callback:(void (^)(id responseObject, NSError *error))callback;
 //获取验证码
 + (NSURLSessionDataTask *)verifyCodeByMobilephone:(NSString *)phone
@@ -134,6 +135,8 @@
                                      couponid:(NSString *)couponId
                                     addressId:(NSString *)addressId
                                        images:(NSArray *)images
+                                       charge:(NSDictionary *)charge
+                                     pay_type:(NSString *)pay_type
                                      callback:(void (^)(id responseObject, NSError *error))callback;
 
 /************************* 优惠劵 *************************/

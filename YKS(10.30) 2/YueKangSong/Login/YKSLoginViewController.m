@@ -41,6 +41,7 @@
 }
 - (UILabel *)label
 {
+    
     if (!_label) {
         _label = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 80, 30)];
         _label.text = @"邀请码:";
@@ -147,6 +148,7 @@
                                                  repeats:YES];
         _time = 60;
         [_timer fire];
+        
         [GZBaseRequest verifyCodeByMobilephone:_phoneTextField.text
                                       callback:^(id responseObject, NSError *error) {
                                           if (error) {
@@ -183,8 +185,10 @@
 
     [self showProgress];
 #warning 发送账号密码请求
+    
     [GZBaseRequest loginByMobilephone:_phoneTextField.text
                              password:_codeTextField.text
+                           invitecode:self.textField.text
                              callback:^(id responseObject, NSError *error) {
                                  
                                  [self hideProgress];
@@ -234,7 +238,7 @@
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.view resignFirstResponder];
+    [self.view endEditing:YES];
 }
 /*
 #pragma mark - Navigation

@@ -17,10 +17,17 @@
 #import "YKSCouponViewController.h"
 #import "YKSUserModel.h"
 
+#import "YKSAppDelegate.h"
 #import "Pingpp.h"
 
+#define kWaiting          @"正在获取支付凭据,请稍后..."
+#define kNote             @"提示"
+#define kConfirm          @"确定"
+#define kErrorNet         @"网络错误"
+#define kResult           @"支付结果：%@"
 
-#define kServerUrl @"server-url"; // 微信支付服务器的地址
+#define KUrlScheme  @"wxdd50133f4733fe7c"//@"demoapp001"  //  这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+#define kUrl       @"http://218.244.151.190/demo/charge" // 服务器的地址
 
 @interface YKSSingleBuyViewController () <
 UITableViewDataSource,
@@ -65,6 +72,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 
 
 @implementation YKSSingleBuyViewController
+@synthesize channel;
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -74,7 +82,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  [Pingpp enableBtn:PingppBtnWx]; // 目前只选择了微信的支付方式（具体渠道查看YKSConstants.h）
+    //[Pingpp enableBtn:PingppBtnWx]; // 目前只选择了微信的支付方式（具体渠道查看YKSConstants.h）
     
     _uploadImages = [NSMutableArray array];
     
@@ -101,7 +109,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
     [self.tableView reloadData];
     
     
- 
+    
     
 }
 
@@ -136,23 +144,89 @@ UIActionSheetDelegate,UIAlertViewDelegate>
     UIAlertView *buyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"根据新版GSP（卫生部第90号令）第一百七十七条规定，药品除质量原因外，一经售出，不得退换。悦康送所售药品及保健品除质量问题外不支持退货。是否确认下单？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil ];
     [buyAlert show];
     [buyAlert callBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        
         if (buttonIndex == 1)
         {
-            [self showProgress];
+            if ([self.channel isEqualToString: @"wx"])
+            {
+
+                NSDictionary *dict =@{@"channel" : self.channel};
+                YKSSingleBuyViewController *__weak weakSelf = self;
+                //[self showAlertWait];
+                [GZBaseRequest submitOrderContrast:@[@{@"gid": _drugInfo[@"gid"],
+                                                       @"gcount": @(_buyCount),
+                                                       @"gtag": _drugInfo[@"gtag"]}]
+                                          couponid:_couponInfo ? _couponInfo[@"id"] : nil
+                                         addressId:_addressInfos[@"id"]
+                                            images:_uploadImages
+                                            charge:dict
+                                          pay_type:@"2"
+                                          callback:^(id responseObject, NSError *error) {
+                                              if (error) {
+                                                  [self showToastMessage:@"网络加载失败"];
+                                                  return ;
+                                              }
+                                                   if (ServerSuccess(responseObject)){
+                                                  [self showToastMessage:kWaiting];
+                                                  NSString * charge1 = responseObject[@"data"][@"charge"];
+                                                  NSData *data=[NSJSONSerialization dataWithJSONObject:charge1 options:0 error:nil];
+                                                  NSString *charge=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      [Pingpp createPayment:charge  viewController:weakSelf appURLScheme:KUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                                                          
+                                                          NSLog(@"completion block: %@",result);
+                                                          if ([result isEqualToString:@"success"])//error == nil)
+                                                          {
+                                                              
+                                                              // NSLog(@"PingppEdrror is  nil");
+                                                              
+                                                              [YKSOrderConfirmView showOrderToView:self.view.window orderId:responseObject[@"data"][@"orderid"] callback:^{
+                                                                  
+                                                                  [self dismissViewControllerAnimated:NO completion:nil];
+                                                                  if (self.navigationController.presentingViewController) {
+                                                                      if ([self.navigationController.presentingViewController isKindOfClass:[UITabBarController class]]) {
+                                                                          [(UITabBarController *)self.navigationController.presentingViewController setSelectedIndex:0];
+                                                                      }
+                                                                      [self.navigationController dismissViewControllerAnimated:NO completion:^{
+                                                                      }];
+                                                                  } else {
+                                                                      self.tabBarController.selectedIndex = 0;
+                                                                      [self.navigationController popToRootViewControllerAnimated:NO];
+                                                                  }
+                                                              }];
+                                                          }
+                                                          else
+                                                          {
+                                                              
+                                                              [weakSelf showAlertMessage:result];
+                                                              NSLog(@"PingppError : code =%lu msg=%@",(unsigned long)error.code,[error getMsg]);
+                                                          }
+                                                      }];
+                                                  });
+                                              }else
+                                              {
+                                                  [self showToastMessage:responseObject[@"msg"]];
+                                              }
+                                          }];
+                return ;
+            }
             //请求网络获取药品处方药非处方药详情
+            [self showProgress];
+            NSDictionary *dict=@{@"channel":@""};
             [GZBaseRequest submitOrderContrast:@[@{@"gid": _drugInfo[@"gid"],
                                                    @"gcount": @(_buyCount),
                                                    @"gtag": _drugInfo[@"gtag"]}]
                                       couponid:_couponInfo ? _couponInfo[@"id"] : nil
                                      addressId:_addressInfos[@"id"]
                                         images:_uploadImages
+                                        charge:dict
+                                      pay_type:@"1"
                                       callback:^(id responseObject, NSError *error) {
                                           [self hideProgress];
                                           if (error) {
                                               [self showToastMessage:@"网络加载失败"];
                                               return ;
                                           }
-                                          
                                           //这里都提交订单了,里面应该有价格提交吧
                                           if (ServerSuccess(responseObject)) {
                                               NSLog(@"订单处理中 %@", responseObject);
@@ -174,13 +248,48 @@ UIActionSheetDelegate,UIAlertViewDelegate>
                                               [self showToastMessage:responseObject[@"msg"]];
                                           }
                                           
+                                          
                                       }];
-            
-
         }
     }];
-  
-  }
+    
+    
+}
+- (void)showAlertWait
+{
+    mAlert = [[UIAlertView alloc] initWithTitle:kWaiting message:nil delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+    [mAlert show];
+    UIActivityIndicatorView* aiv = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    aiv.center = CGPointMake(mAlert.frame.size.width / 2.0f - 15, mAlert.frame.size.height / 2.0f + 10 );
+    [aiv startAnimating];
+    [mAlert addSubview:aiv];
+}
+
+- (void)showAlertMessage:(NSString*)msg
+{
+    if ([msg isEqualToString:@"cancel"]) {
+        msg=@"您已取消支付";
+    }
+    if ([msg isEqualToString:@"fail"]) {
+        msg=@"支付失败";
+    }
+    if ([msg isEqualToString:@"success"]) {
+        msg=@"支付成功";
+    }
+    
+    mAlert = [[UIAlertView alloc] initWithTitle:kNote message:msg delegate:nil cancelButtonTitle:kConfirm otherButtonTitles:nil, nil];
+    [mAlert show];
+}
+
+- (void)hideAlert
+{
+    if (mAlert != nil)
+    {
+        [mAlert dismissWithClickedButtonIndex:0 animated:YES];
+        mAlert = nil;
+    }
+}
+
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -234,23 +343,56 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         //[self performSegueWithIdentifier:@"gotoYKSAddressListViewController" sender:nil];
     }
     
-    if (_isPrescription)
+    if(_isPrescription)
     {
-        
+        if (indexPath.section == 4)
+        {
+            if (indexPath.row == 2)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateSelected];
+                self.channel=@"wx";
+            }
+            else if (indexPath.row == 1)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateSelected];
+                self.channel=@"hd";
+            }
+        }
     }
-    
+    if (!(_isPrescription))
+    {
+        if (indexPath.section == 3)
+        {
+            
+            if (indexPath.row == 2)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                self.channel=@"wx";
+            }
+            
+            else if (indexPath.row == 1)
+            {
+                [_daoFuBtn setBackgroundImage:[UIImage imageNamed:@"pay_ok"] forState:UIControlStateNormal];
+                [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
+                self.channel = @"hd";
+            }
+        }
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (indexPath.section == 0) {
-//        if ([[YKSUserModel shareInstance] currentSelectAddress]) {
-//            if ([[YKSUserModel shareInstance].currentSelectAddress[@"sendable"] integerValue] == 1) {
-//                return ;
-//            }
-//        }
-//        [self performSegueWithIdentifier:@"gotoYKSAddressListViewController" sender:nil];
-//    }
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //    if (indexPath.section == 0) {
+    //        if ([[YKSUserModel shareInstance] currentSelectAddress]) {
+    //            if ([[YKSUserModel shareInstance].currentSelectAddress[@"sendable"] integerValue] == 1) {
+    //                return ;
+    //            }
+    //        }
+    //        [self performSegueWithIdentifier:@"gotoYKSAddressListViewController" sender:nil];
+    //    }
+    //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -279,7 +421,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     NSDictionary *currentAddr = [UIViewController selectedAddressUnArchiver];
+    NSDictionary *currentAddr = [UIViewController selectedAddressUnArchiver];
     
     if (indexPath.section == 0)
     {
@@ -292,12 +434,12 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         }
         NSDictionary *dic = currentAddr;
         
-//        if ([[YKSUserModel shareInstance] currentSelectAddress]) {
-//            if ([[YKSUserModel shareInstance].currentSelectAddress[@"sendable"] integerValue] == 1) {
-//                addressCell.accessoryType = UITableViewCellAccessoryNone;
-//            }
-//        }
-//        NSDictionary *dic = _addressInfos;
+        //        if ([[YKSUserModel shareInstance] currentSelectAddress]) {
+        //            if ([[YKSUserModel shareInstance].currentSelectAddress[@"sendable"] integerValue] == 1) {
+        //                addressCell.accessoryType = UITableViewCellAccessoryNone;
+        //            }
+        //        }
+        //        NSDictionary *dic = _addressInfos;
         if (!dic) {
             addressCell.nameLabel.text = @"点击进入选择收货地址";
             addressCell.phoneLabel.text = @"";
@@ -328,14 +470,14 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         {
             YKSBuyLabelCell *labelCell = [tableView dequeueReusableCellWithIdentifier:@"BuyLabelCell" forIndexPath:indexPath];
             [labelCell.rightButton addTarget:self
-                                    action:@selector(addImageAction:)
-                          forControlEvents:UIControlEventTouchUpInside];
+                                      action:@selector(addImageAction:)
+                            forControlEvents:UIControlEventTouchUpInside];
             [labelCell.leftButton.closeButton addTarget:self
-                                                  action:@selector(removeUpdaloadImage:)
-                                        forControlEvents:UIControlEventTouchUpInside];
+                                                 action:@selector(removeUpdaloadImage:)
+                                       forControlEvents:UIControlEventTouchUpInside];
             [labelCell.centerButton.closeButton addTarget:self
-                                                  action:@selector(removeUpdaloadImage:)
-                                        forControlEvents:UIControlEventTouchUpInside];
+                                                   action:@selector(removeUpdaloadImage:)
+                                         forControlEvents:UIControlEventTouchUpInside];
             [labelCell.rightButton.closeButton addTarget:self
                                                   action:@selector(removeUpdaloadImage:)
                                         forControlEvents:UIControlEventTouchUpInside];
@@ -378,7 +520,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
     }
     else if(_isPrescription)
     {
-     
+        
         if (indexPath.section==3) {
             YKSBuyCouponCell *couponCell = [tableView dequeueReusableCellWithIdentifier:@"BuyCouponCell" forIndexPath:indexPath];
             if (_couponInfo) {
@@ -397,16 +539,16 @@ UIActionSheetDelegate,UIAlertViewDelegate>
             cell.textLabel.text=@"123";
             return cell;
         }
-  
+        
     }
     else {
-           NSString *iden=@"onetwothree";
-            
-            UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:iden];
-            
-            if (!cell) {
-                cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:iden];
-            }
+        NSString *iden=@"onetwothree";
+        
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:iden];
+        
+        if (!cell) {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:iden];
+        }
         
         if (indexPath.row==0) {
             
@@ -434,7 +576,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         }
         
         else if (indexPath.row==2){
-        cell.textLabel.text=@"微信支付";
+            cell.textLabel.text=@"微信支付";
             _onLineBtn =[UIButton buttonWithType:UIButtonTypeCustom];
             
             [_onLineBtn setBackgroundImage:[UIImage imageNamed:@"pay"] forState:UIControlStateNormal];
@@ -443,7 +585,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
             
             [cell.contentView addSubview:_onLineBtn];
         }
-              return cell;
+        return cell;
     }
 }
 
@@ -461,23 +603,23 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 //{
 //    if (section == 2)
 //    {
-//        
-//        
+//
+//
 //        UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
-//        
+//
 //        UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
 //        [btn1 setImage:[UIImage imageNamed:@"thingMoney.png"] forState:UIControlStateNormal];
-//        
+//
 //        if (SCREEN_WIDTH>320) {
 //            btn1.frame =CGRectMake(10, 20,138,42);
-//            
+//
 //        }
 //        else {
-//            
+//
 //            btn1.frame = CGRectMake(10, 20,92,28);
 //        }
 //   // [btn1 setTitle:@"货到付款" forState:UIControlStateNormal];
-//    
+//
 //    // [btn1 addTarget:self action:@"dobtn1:" forControlEvents:UIControlEventTouchUpInside];
 //    [footView addSubview:btn1];
 //    return footView;
@@ -508,7 +650,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
         return;
     }
     _originTotalPrice = [_drugInfo[@"gprice"] floatValue] *_buyCount;
-
+    
     [self showPirce:drugCell];
 }
 
@@ -532,11 +674,11 @@ UIActionSheetDelegate,UIAlertViewDelegate>
     
     if (_originTotalPrice<[self.couponInfo[@"faceprice"] floatValue]) {
         self.couponInfo = nil;
-
+        
 #pragma kkkk
-//        YKSBuyCouponCell *couponCell = [self.tableView dequeueReusableCellWithIdentifier:@"BuyCouponCell" forIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-//        couponCell.detailTextLabel.text = @"";
-       
+        //        YKSBuyCouponCell *couponCell = [self.tableView dequeueReusableCellWithIdentifier:@"BuyCouponCell" forIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+        //        couponCell.detailTextLabel.text = @"";
+        
     }
     [self.tableView reloadData];
     
@@ -557,7 +699,7 @@ UIActionSheetDelegate,UIAlertViewDelegate>
                                           
                                           _totalPriceLabel.attributedText = [YKSTools priceString:price  ];
                                           _freightLabel.text = freightPriceString;
-    }];
+                                      }];
 }
 
 #pragma mark - Navigation
@@ -574,15 +716,15 @@ UIActionSheetDelegate,UIAlertViewDelegate>
     } else if ([segue.identifier isEqualToString:@"gotoYKSCouponViewController"]) {
         YKSCouponViewController *vc = segue.destinationViewController;
         vc.totalPirce = _originTotalPrice;
-//        if (!_couponInfo) {
-//            vc.totalPirce = _totalPrice;
-//        } else {
-//            vc.totalPirce = _totalPrice + [_couponInfo[@"faceprice"] floatValue];
-//        }
+        //        if (!_couponInfo) {
+        //            vc.totalPirce = _totalPrice;
+        //        } else {
+        //            vc.totalPirce = _totalPrice + [_couponInfo[@"faceprice"] floatValue];
+        //        }
         vc.callback = ^(NSDictionary *info) {
             _couponInfo = info;
             if (_couponInfo && _couponInfo[@"faceprice"]) {
-//                _totalPrice = _originTotalPrice - [self.couponInfo[@"faceprice"] floatValue];
+                //                _totalPrice = _originTotalPrice - [self.couponInfo[@"faceprice"] floatValue];
                 [YKSTools showFreightPriceTextByTotalPrice:_originTotalPrice callback:^(NSAttributedString *totalPriceString, NSString *freightPriceString) {
                     CGFloat freightPrice = [totalPriceString.string substringFromIndex:1].floatValue;
                     CGFloat price = freightPrice - [self.couponInfo[@"faceprice"] floatValue];

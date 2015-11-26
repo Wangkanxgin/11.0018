@@ -30,7 +30,10 @@
 @implementation YKSYQMTableViewController
 - (IBAction)quedingsendyqm:(id)sender {
     [self.view endEditing:YES];
+    
     [GZBaseRequest getYQMPromotephone:[YKSUserModel shareInstance].telePhone andcode:self.sendyqmLabel.text AndcallBack:^(id responseObject, NSError *error) {
+        
+        
         if (ServerSuccess(responseObject)) {
             self.sendyqmLabel.text = responseObject[@"data"][@"invitenum"];
             self.sendyqmLabel.userInteractionEnabled=NO;

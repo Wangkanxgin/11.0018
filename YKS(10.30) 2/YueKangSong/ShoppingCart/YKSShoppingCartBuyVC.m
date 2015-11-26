@@ -183,6 +183,9 @@ UIActionSheetDelegate,UIAlertViewDelegate>
                               couponid:_couponInfo ? _couponInfo[@"id"] : nil
                              addressId:_addressInfos[@"id"]
                                 images:_uploadImages
+                                charge:@{}
+                              pay_type:@"1"
+     
                               callback:^(id responseObject, NSError *error) {
                                   [self hideProgress];
                                   if (error) {

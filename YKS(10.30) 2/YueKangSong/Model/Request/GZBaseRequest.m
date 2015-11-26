@@ -53,7 +53,7 @@ NSString *const kExpressInfo = @"/express/index?op_type=getExpressInfo";//查询
  *  op_type=searchbyid根据id查询订单
 	op_type=searchbystatus根据status查询订单status是空查询所有
 	op_type=searchbydid根据药店id 查询订单 也可以把oid 传入 这个时候查询这个药店下的指定订单号
-
+ 
  */
 NSString *const kSearchOrderById = @"/corder/index?op_type=searchbyid";
 NSString *const kSearchOrderByStatus = @"/corder/index?op_type=searchbystatus";
@@ -99,12 +99,12 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
     
     
     
-     [[GZHTTPClient shareClient]GET:@"/Cversion/index?op_type=iosversion" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-         
-             callback(responseObject,nil);
- 
-         
-         
+    [[GZHTTPClient shareClient]GET:@"/Cversion/index?op_type=iosversion" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        callback(responseObject,nil);
+        
+        
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         callback(nil,error);
     }];
@@ -134,7 +134,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         callback(nil,error);
     }];
-
+    
     
 }
 //领取优惠券
@@ -145,7 +145,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
         callback(nil,error);
     }];
     
-
+    
     
     
 }
@@ -172,10 +172,11 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 //登录 password 是 md5加密的
 + (NSURLSessionDataTask *)loginByMobilephone:(NSString *)phone
                                     password:(NSString *)password
-                                    callback:(void (^)(id responseObject, NSError *error))callback {
+                                    invitecode:(NSString *)invitecode                                     callback:(void (^)(id responseObject, NSError *error))callback {
     NSDictionary *params = @{@"mobilephone": phone,
                              @"upwd": [YKSTools md5:password],
                              @"token": [YKSUserModel deviceToken],
+                             @"invitecode":invitecode,
                              @"tags": ClientKey};
     NSLog(@"登录上传token params = %@", params);
     return [[GZHTTPClient shareClient] POST:kLogin
@@ -391,7 +392,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 
 
 + (NSURLSessionDataTask *)restartShoppingCartBygids:(NSString *)gids
-                                          callback:(void (^)(id responseObject, NSError *error))callback {
+                                           callback:(void (^)(id responseObject, NSError *error))callback {
     return [[GZHTTPClient shareClient] POST:[self jointPhone:kRestartShoppingCart]
                                  parameters:nil
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -491,8 +492,8 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
                                   detailAddress:(NSString *)detailAddress
                                        contacts:(NSString *)contact
                                       telePhone:(NSString *)telePhone
-                                        cityName:(NSString *)cityName callback:(void (^)(id, NSError *))callback
-                                        {
+                                       cityName:(NSString *)cityName callback:(void (^)(id, NSError *))callback
+{
     NSDictionary *params = @{@"mobilephone": [YKSUserModel telePhone],
                              @"express_area": expressArea,
                              @"community": community,
@@ -502,8 +503,8 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
                              @"express_mobilephone": telePhone,
                              @"city_name":cityName
                              };
-                                            
-                                            
+    
+    
     return [[GZHTTPClient shareClient] GET:kAddAddress
                                 parameters:params
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -644,9 +645,15 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
                                      couponid:(NSString *)couponId
                                     addressId:(NSString *)addressId
                                        images:(NSArray *)images
+                                       charge:(NSDictionary *)charge
+                                     pay_type:(NSString *)pay_type
                                      callback:(void (^)(id responseObject, NSError *error))callback {
     NSMutableDictionary *params = [@{@"gcontrast": [gcontrast objectToJsonString],
-                                     @"express_id": addressId} mutableCopy];
+                                     @"express_id": addressId,
+                                     @"charge":[charge objectToJsonString],
+                                     @"pay_type":pay_type
+                                     } mutableCopy
+                                   ];
     //看看这个请求字典,没转json之前的样子
     NSLog(@"---- ccccc------%@",@{@"gcontrast":gcontrast});
     if (couponId) {//这是什么,有优惠信息
@@ -712,7 +719,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
     //返回一个什么请求的总共结果
     return [[GZHTTPClient shareClient] GET:kCouponList
                                 parameters:params
-                                //成功
+            //成功
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        NSLog(@"---- responseObject 优惠券成功,看里面的价格------%@",responseObject);
                                        //这里里面有一个faceprice = "5.00";
@@ -726,7 +733,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 #warning 这里只要找到这个优惠券值,储存,然后那里再减去一个这样的值就ok了
                                        
                                        NSLog(@"----faceprice ------%@",datadict[@"faceprice"]);
-                                      // NSObject *faceprice = datadict[@"faceprice"];
+                                       // NSObject *faceprice = datadict[@"faceprice"];
                                        
                                        
                                        
@@ -831,7 +838,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 }
 
 + (NSURLSessionDataTask *)msgListByPage:(NSInteger)page
-                             callback:(void (^)(id responseObject, NSError *error))callback {
+                               callback:(void (^)(id responseObject, NSError *error))callback {
     return [[GZHTTPClient shareClient]  GET:[self jointPhone:kGetMsg]
                                  parameters:@{@"page": @(page)}
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -878,7 +885,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 //获取某个用户当天根据步数兑换的优惠券
 
 + (NSURLSessionDataTask *)getwalkcouponstoday:(NSString *)telePhone andMac:(NSString *)mac
-                                    callback:(void (^)(id responseObject, NSError *error))callback {
+                                     callback:(void (^)(id responseObject, NSError *error))callback {
     
     NSDictionary *params = @{@"phone": telePhone,@"mac":mac};
     
@@ -898,7 +905,7 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
 //根据步数领取对应优惠券
 
 + (NSURLSessionDataTask *)healthwalkexchange:(NSString *)telePhone exchangecode:(NSString *)exchangecode
-                                     callback:(void (^)(id responseObject, NSError *error))callback {
+                                    callback:(void (^)(id responseObject, NSError *error))callback {
     
     NSDictionary *params = @{@"phone": telePhone,@"exchangecode":exchangecode};
     

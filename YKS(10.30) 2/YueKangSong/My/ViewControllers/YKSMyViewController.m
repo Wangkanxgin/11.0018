@@ -9,10 +9,15 @@
 #import "YKSMyViewController.h"
 #import "YKSUserModel.h" 
 #import "YKSHomeTableViewController.h"
+#import "GZBaseRequest.h"
 @interface YKSMyViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *myCenterTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myCenterLabel;
+//@property(strong,nonatomic) UILabel *YQMLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *YQMLabel;
+
 
 @end
 
@@ -36,7 +41,7 @@
         _myCenterTitleLabel.text = @"注册/登录";
         _myCenterLabel.text = @"";
     }
-}
+    }
 
 
 - (void)viewDidLoad {
@@ -46,6 +51,26 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+    [GZBaseRequest getYQMhuizhangphone:[YKSUserModel shareInstance].telePhone AndcallBack:^(id responseObject, NSError *error) {
+        // NSLog(@"aaa%@",responseObject);
+        if (ServerSuccess(responseObject)) {
+            NSString *YQMlabel = [NSString stringWithFormat: @"我的邀请码      %@" ,responseObject[@"data"][@"promoteCode"]];
+            
+            self.YQMLabel.text = YQMlabel;
+            self.YQMLabel.userInteractionEnabled=NO;
+            if (![YKSUserModel isLogin])
+            {
+              self.YQMLabel.text=@"我的邀请码";
+            }
+        }
+        
+    } ];
+    
+
+  
+
+    
 }
 
 - (IBAction)msgAction:(id)sender {
@@ -57,6 +82,26 @@
     [self performSegueWithIdentifier:@"gotoYKSMsgTableViewController" sender:nil];
 }
 
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//    static NSString *reuseIdetify = @"Cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetify];
+//    if (!cell) {
+//
+//        if (indexPath.section == 2)
+//        {
+//        if (indexPath.row == 0) {
+//            
+//            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+//
+//        }
+//    }
+//     }
+//    return cell;
+//
+//}
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -70,15 +115,15 @@
         [self performSegueWithIdentifier:@"gotoYKSMyInfoDetailVC" sender:nil];
     } else if (indexPath.section == 2) {
         switch (indexPath.row) {
-            case 0: {
+            case 1: {
                 [self performSegueWithIdentifier:@"gotoCollectVC" sender:nil];
             }
                 break;
-            case 1: {
-                [self performSegueWithIdentifier:@"gotoCouponVC" sender:nil];
+            case 2: {
+                [self performSegueWithIdentifier:@" " sender:nil];
             }
                 break;
-            case 2: {
+            case 3: {
                 [self performSegueWithIdentifier:@"gotoAddressVC" sender:nil];
             }
                 break;

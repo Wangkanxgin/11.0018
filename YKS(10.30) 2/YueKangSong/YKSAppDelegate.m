@@ -195,13 +195,22 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+    // ios 8  及以下使用这个
+    [Pingpp handleOpenURL:url withCompletion:nil];
     
     
-    // 微信支付部分(可能需要判断系统版本)
-    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
-        NSLog(@"result = %@, error : %@", result, error == nil ? @"nil" : [error getMsg]);
-    }];
+      [UMSocialSnsService handleOpenURL:url];
+    
+    return YES;
+    
+  }
+
+
+//   ios9 以上使用这个
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
+    
+    [Pingpp handleOpenURL:url withCompletion:nil];
     return YES;
 }
 
