@@ -181,4 +181,8 @@
 //获取某个用户当天根据步数兑换的优惠券
 + (NSURLSessionDataTask *)healthwalkexchange:(NSString *)telePhone exchangecode:(NSString *)exchangecode
                                     callback:(void (^)(id responseObject, NSError *error))callback ;
+
+//判断支付渠道
++(NSURLSessionDataTask *)getpaytype :(void (^)(id responseObject, NSError *error))callback;
+
 @end

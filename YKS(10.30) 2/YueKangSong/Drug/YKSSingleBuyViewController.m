@@ -66,6 +66,8 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *freightLabel;
 
+@property(nonatomic,strong)NSMutableArray *paytypeArray;
+
 
 
 @end
@@ -81,6 +83,8 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     //[Pingpp enableBtn:PingppBtnWx]; // 目前只选择了微信的支付方式（具体渠道查看YKSConstants.h）
     
@@ -405,22 +409,38 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+  
+  
     if (_isPrescription) {
-        if (section == 4) {
-            return 3;
-        }
-    }
-    else{
-        if (section==3) {
-            return 3;
+        if (section == 4)
+        {
+            NSArray *array=[[NSUserDefaults standardUserDefaults] objectForKey:@"pay_type"];
+            
+            if (array.count == 1 )
+            {
+                return 2;
+            }
+             return 3;
         }
     }
     
+    if (!_isPrescription)
+        {
+            if (section==3)
+            {
+                NSArray *array=[[NSUserDefaults standardUserDefaults] objectForKey:@"pay_type"];
+                
+                if (array.count == 1 )
+                {
+                    return 2;
+                }
+                
+                return 3;
+            }
+         }
     return 1;
 }
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+ - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *currentAddr = [UIViewController selectedAddressUnArchiver];
     
     if (indexPath.section == 0)

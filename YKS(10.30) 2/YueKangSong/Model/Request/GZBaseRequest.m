@@ -88,23 +88,18 @@ NSString *const healthwalkexchange=@"/couponid/index?op_type=healthwalkexchange"
 
 NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoday";
 
-
+//判断支付渠道
+NSString *const getpaytype =@"/corder/index?op_type=getpaytype";
 
 @implementation GZBaseRequest
 
 //获取后台版本
 +(void)getBackgroundVersionAndcallBack:(void (^)(id responseObject, NSError *error ))callback{
-    
-    
-    
-    
-    
+
     [[GZHTTPClient shareClient]GET:@"/Cversion/index?op_type=iosversion" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         callback(responseObject,nil);
-        
-        
-        
+ 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         callback(nil,error);
     }];
@@ -921,6 +916,18 @@ NSString *const getwalkcouponstoday=@"/couponid/index?op_type=getwalkcouponstoda
                                    }];
 }
 
-
+//  判断支付渠道
++(NSURLSessionDataTask *)getpaytype:(void(^)(id responseObject,NSError *error))callback
+{
+     return [[GZHTTPClient shareClient] GET:getpaytype parameters:nil success:^(NSURLSessionDataTask *task, id responseObject)
+    {
+        
+        callback(responseObject,nil);
+    }
+      failure:^(NSURLSessionDataTask *task, NSError *error)
+    {
+         callback(nil, error);
+    }];
+}
 
 @end
