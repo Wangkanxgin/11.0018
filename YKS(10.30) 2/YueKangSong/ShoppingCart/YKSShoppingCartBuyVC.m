@@ -376,19 +376,33 @@ UIActionSheetDelegate,UIAlertViewDelegate>
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     if (_isPrescription) {
-        if (section == 4) {
+        if (section == 4)
+        {
+            NSArray *array=[[NSUserDefaults standardUserDefaults] objectForKey:@"pay_type"];
+            
+            if (array.count == 1 )
+            {
+                return 2;
+            }
             return 3;
         }
     }
-    else{
-        if (section==3) {
+    
+    if (!_isPrescription)
+    {
+        if (section==3)
+        {
+            NSArray *array=[[NSUserDefaults standardUserDefaults] objectForKey:@"pay_type"];
+            
+            if (array.count == 1 )
+            {
+                return 2;
+            }
+            
             return 3;
         }
-    }
-
-    if (section == 1) {
-        return _drugs.count + 1;
     }
     return 1;
 }
