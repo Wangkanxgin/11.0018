@@ -113,14 +113,15 @@
     
     if (indexPath.section == 0) {
         [self performSegueWithIdentifier:@"gotoYKSMyInfoDetailVC" sender:nil];
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 1: {
                 [self performSegueWithIdentifier:@"gotoCollectVC" sender:nil];
             }
                 break;
+                
             case 2: {
-                [self performSegueWithIdentifier:@" gotoCouponVC" sender:nil];
+                [self performSegueWithIdentifier:@"gotoCouponVC" sender:nil];
             }
                 break;
             case 3: {
@@ -130,7 +131,7 @@
             default:
                 break;
         }
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 2){
         [self performSegueWithIdentifier:@"yaoqingma" sender:nil];
     }
     else if (indexPath.section == 3) {
