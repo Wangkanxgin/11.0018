@@ -23,15 +23,33 @@
 @property (strong, nonatomic) NSMutableArray *pendingDatas;
 @property (strong, nonatomic) NSMutableArray *shippingDatas;
 @property (strong, nonatomic) NSMutableArray *receivedDatas;
+@property (strong, nonatomic) NSMutableArray *cancelDatas;
 @property (assign, nonatomic) YKSOrderStatus status;
 @property (assign, nonatomic) NSInteger page;
+
+@property (nonatomic,strong) UIButton *shareButton;
+
 
 @end
 
 @implementation YKSOrderViewController
 
+- (UIButton *)shareButton
+{
+    if(!_shareButton)
+    {
+        _shareButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _shareButton.backgroundColor = [UIColor redColor];
+        _shareButton.frame = CGRectMake(137, 7, 91, 31);
+    }
+    return _shareButton;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     [YKSTools insertEmptyImage:@"order_list_empty" text:@"您的订单是空的" view:self.view];
     
@@ -56,7 +74,7 @@
     [[DZNSegmentedControl appearance] setTintColor:kNavigationBar_back_color];
     [_control setHairlineColor:[UIColor lightGrayColor]];
     _control.selectedSegmentIndex = 0;
-    _control.items = @[@"待处理", @"配送中", @"订单已签收"];
+    _control.items = @[@"待处理", @"配送中", @"已签收",@"已取消"];
     _control.showsCount = NO;
     _control.height = 40.0f;
     _control.autoAdjustSelectionIndicatorWidth = NO;
@@ -85,6 +103,18 @@
         } else {
             _datas = _receivedDatas;
         }
+    }else if (control.selectedSegmentIndex == 3)
+    {
+        _status = YKSOrderStatusCancel;
+        if (!_cancelDatas)
+        {
+            _datas = nil;
+            [self requestDataByPage:1 orderStatus:YKSOrderStatusCancel];
+        }else
+        {
+            _datas = _cancelDatas;
+        }
+        
     }
     if (_datas.count < 10 || _datas.count % 10 != 0) {
         self.tableView.footer.hidden = YES;
@@ -116,11 +146,8 @@
                                            return ;
                                        }
                                        if (ServerSuccess(responseObject)) {
-                                           
-                                           
                                            NSDictionary *dic = responseObject[@"data"];
                                            if ([dic isKindOfClass:[NSDictionary class]] && dic[@"glist"]) {
-                                               
                                                NSMutableArray *tempArray;
                                                if (status == YKSOrderStatusPending) {
                                                    tempArray = _pendingDatas;
@@ -128,8 +155,10 @@
                                                    tempArray = _shippingDatas;
                                                } else if (status == YKSOrderStatusReceived) {
                                                    tempArray = _receivedDatas;
+                                               }else if (status == YKSOrderStatusCancel)
+                                               {
+                                                   tempArray = _cancelDatas;
                                                }
-                                               
                                                if (page == 1) {
                                                    tempArray = [responseObject[@"data"][@"glist"] mutableCopy];
                                                } else {
@@ -143,6 +172,9 @@
                                                    _shippingDatas = tempArray;
                                                } else if (status == YKSOrderStatusReceived) {
                                                    _receivedDatas = tempArray;
+                                               }else if (status == YKSOrderStatusCancel)
+                                               {
+                                                   _cancelDatas = tempArray;
                                                }
                                                
                                                _datas = tempArray;
@@ -258,6 +290,7 @@
         YKSOrderListStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderStatusCell" forIndexPath:indexPath];
         return cell;
     }
+    
 }
 
 
